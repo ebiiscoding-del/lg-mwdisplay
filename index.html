@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="theme-color" content="#050607">
-<title>LG MJ3286BRUS Digital Twin v12</title>
+<title>LG MJ3286BRUS Digital Twin v13</title>
 <style>
 :root{
   --bg:#030405; --panel:#0a0b0c; --panel2:#111315; --edge:#3a3d40;
@@ -285,6 +285,12 @@ function snapshot(){hist.push(JSON.stringify(st));if(hist.length>50)hist.shift()
 function currentWeightOptions(){
   if(!st.auto)return [];
   return (WEIGHT_OPTIONS[st.auto]&&WEIGHT_OPTIONS[st.auto][st.autoIndex-1])||[];
+}
+function getWeightOptions(key,categoryNo){
+  const group=WEIGHT_OPTIONS[key];
+  if(!group)return [];
+  const opts=group[categoryNo-1];
+  return Array.isArray(opts)?opts:[];
 }
 function currentWeightLabel(){
   const opts=currentWeightOptions();
@@ -587,7 +593,7 @@ for(const [key,names] of Object.entries(EXACT_RECIPES)){
       i===0?"Category 1 is the first selection — no dial turn":`Turn dial RIGHT ${i} ${i===1?'click':'clicks'}`,
       `Display should show “${i+1} ${name}”`,
       "Press START/Add 30secs to confirm category",
-      `Turn dial to select weight / quantity: ${WEIGHT_OPTIONS[key][i].length?WEIGHT_OPTIONS[key][i].join(' / '):'not required'}`, 
+      `Turn dial to select weight / quantity: ${getWeightOptions(key,i+1).length?getWeightOptions(key,i+1).join(' / '):'not required'}`, 
       "Press START/Add 30secs"
     ]
   }));
@@ -670,17 +676,6 @@ function useRecipe(cat){
 }
 
 
-document.addEventListener('click',e=>{
-  const chip=e.target.closest('.chip[data-cat-index]');
-  if(!chip)return;
-  e.preventDefault();
-  e.stopPropagation();
-  const i=Number(chip.dataset.catIndex);
-  if(Number.isInteger(i) && BOOK_CATEGORIES[i]){
-    bookCategory=BOOK_CATEGORIES[i];
-    renderRecipes();
-  }
-});
 
 document.addEventListener('DOMContentLoaded',()=>{renderChips();renderRecipes();timerPaint();});
 </script>
