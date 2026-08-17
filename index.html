@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="theme-color" content="#050607">
-<title>LG MJ3286BRUS Digital Twin v10</title>
+<title>LG MJ3286BRUS Digital Twin v11</title>
 <style>
 :root{
   --bg:#030405; --panel:#0a0b0c; --panel2:#111315; --edge:#3a3d40;
@@ -273,12 +273,25 @@ const POWER=[900,720,540,360,180];
 const TEMP=[40,100,110,120,130,140,150,160,170,180,190,200,210,220,230];
 const AUTO={"CHARCOAL": {"name": "Charcoal / Indian Cuisine"}, "DIET": {"name": "Diet Fry / Low Calorie"}, "KIDS": {"name": "Kids’ Delight / Steam Chef"}, "ROTI": {"name": "Indian Roti Basket"}, "DAIRY": {"name": "Tea / Dairy Delight"}, "DOSA": {"name": "Dosa / Ghee"}, "AID": {"name": "Cooking Aid / Steam Clean"}};
 const EXACT_RECIPES={"CHARCOAL": ["MURG TANDOORI", "BHARWAN TAMATAR", "TANDOORI ALOO", "TANDOORI GOBHI", "BHARWAN BHINDI", "BHARWAN BAIGAN", "TANDOORI JHINGA", "CHANA KABABS", "PANEER TIKKA", "MATAR KABABS", "TANDOORI MUSHROOMS", "ARBI TANDOORI", "MALAI TIKKA", "CORN KABABS", "KASTOORI KABAB", "TIKKA ACHAARI", "MAHI TIKKA", "TANDOORI SUBZI", "MIX VEG PLATTER", "FISH TANDOORI", "FALDARI KABABS", "SPICY CHICKEN KABABS", "CHILKA KABABS", "JIMIKAND KE KABABS", "KAJU KABABS", "MUTTON & TOMATO KABABS", "DAHI KABABS", "CHICKEN LOLLIPOPS", "TANDOORI FRUIT CHAAT", "CHICKEN SAUTE", "MIX VEG", "KADHAI PANEER", "DAL TADKA", "SAMBHAR", "DUM ALOO", "KADHI", "BAATI", "DALMA", "PITHLA", "PANCHMEL KI SABZI", "GUJARATI TUVAR DAL", "BUTTER CHICKEN", "BEANS PORIAL", "GOAN POTATO CURRY", "VEG. HANDVA", "KASHMIRI KAJU PANEER", "KADHAI CHICKEN", "BAIGAN KA BHARTA", "KOFTA CURRY", "ALOO GOBHI", "MATAR PANEER", "GATTE KI SABZI", "EGG CURRY", "JHINGA MATAR CURRY", "DUM TANGRI", "MAKKI KORMA", "LITTI", "CHOKHA", "METHI ALOO", "KADDU KI SABZI", "PALAK KEEMA", "PANEER PISTA HARYALI", "BANDHGOBHI MATAR", "MUSHROOM CHILLI", "KALONJI ALOO", "DAHI ALOO", "ALOO SHIMLAMIRCH", "PANEER BHURJI", "SCRAMBLED EGGS", "UKADICHE MODAK", "SUJI HALWA", "BESAN LADOO", "KHEER", "PAYASAM", "MYSORE PAK", "NARIYAL BURFI", "SANDESH", "SEVIYAN ZARDA", "BURFI", "KALAKAND", "SHAHI RABDI", "SHAHI TUKDA", "KADDU KHEER", "RAVA LADOO", "KAJU BURFI", "BADAM HALWA", "SUJI KHEER", "FRUITS DESSERT", "RAGGI KHEER", "FRUIT RAVA KESARI", "CHICKEN BIRYANI", "GOSHT DUM BIRYANI", "MALABAR BIRYANI", "PINEAPPLE FRIED RICE", "VEG. PULAO", "VEG. TAHIRI", "PEPPER RICE", "ZAFRANI PULAO", "BENGALI BIRYANI", "KHUMB PULAO", "TIRANGA PULAO", "EGG BIRYANI", "ACHARI CHANA PULAO", "METHI RICE", "COCONUT RICE", "CURD RICE", "KEEMA PULAO", "TOMATO PULAO", "PANEER FRIED RICE", "CHILLI GARLIC RICE", "APPLE TOMATO CHUTNEY", "LEMON PICKLE", "MIX VEG PICKLE", "PIZZA SAUCE", "TOMATO SAUCE", "MASALA CHUTNEY", "LEHSUN KI CHUTNEY", "MANCHURIAN SAUCE", "AAM KI CHUTNEY", "COCONUT CHUTNEY", "TIL KI CHUTNEY", "CHANA CHAAT", "ALOO KAND CHAAT", "AMLA CHUTNEY", "BAINGAN CHUTNEY"], "DIET": ["CHICKEN NUGGETS", "ALOO CHIPS", "BREAD PAKORA", "PANEER PAKORA", "GUIJIA", "SAMOSA", "MASALA VADA", "CHICKEN 65", "STUFFED ALOO PATTIES", "MUSHROOM ROLLS", "SABUDANA VADA", "FISH AMRITSARI", "BATATA VADA", "PYAAZ PAKORA", "MIRCHI VADA", "ALOO BHAJI", "SOYABEAN TIKKI", "OATS CUTLET", "METHI MASALA VADA", "POHA PATTIES", "FRENCH TOAST", "BUFF VADA", "PALAK TIKKI", "CORN ALOO TIKKI", "MIX VEG BHAJIA", "BEET ROOT SALAD", "COUS COUS SALAD", "PASTA SALAD", "RICE SALAD", "CHICKEN IN TOMATO TOWERS", "TIRANGA SALAD", "HARI SEEKH SALAD", "BABYCORN AND BEAN SALAD", "CARROT AND PEAS SALAD", "PAPAYA LACHCHA SALAD", "WHOLE WHEAT & MINT SALAD", "BREAD SALAD", "SPRING BASKET SALAD", "CRUNCHY CHICKEN SALAD", "BROCCOLI SALAD", "LEMON CHICKEN", "KALA CHANA", "KARELA SUBZI", "MACHI KALI MIRCH", "NUTRINUGGETS", "SOYABEAN CURRY", "CURD BRINJAL", "FISH BHARTA", "SOYA IDLI", "BATHUA RAITA", "SPINACH DAL", "HEALTHY KHICHDI", "LEAF ROLLS", "MOONG DAL", "OATS IDLI", "DALIYA KHICHDI", "FISH CUTLET", "FISH MASALA", "FISH PULUSU", "COCONUT PRAWNS", "CRAB CURRY", "MASE KALAVAN", "DALIYA KHICHDI", "SABUDANA KHICHDI", "HOME MADE CEREAL", "KHICHDI", "CHICKEN SHORBA", "TAMATAR SHORBA", "SWEET CORN SOUP", "MUSHROOM SOUP", "RASAM", "HOT & SOUR SOUP", "TOMATO SOUP", "MULLIGATWNY SOUP", "TOM YUM KUNG", "SICHUAN SOUP", "PALAK MAKAI SHORBA", "RAJMA SOUP", "SHAHI SHORBA", "BOMBAY CURRY SOUP", "BADAM SOUP", "LIMBU DHANIA SHORBA", "MUTTON SHORBA", "DAL SHORBA", "CHICKEN SOUP", "WONTON SOUP", "PASTA", "VEG AU GRATIN", "BAKED MUSHROOM", "POTATO DUMPLING", "LASANEYA", "MACARONI", "CHILLI VEG", "THAI CHICKEN", "SWEET & SOUR VEG", "MEDITERRANEAN CROSTINI", "RISOTTO RICE", "SPAGHETTI WITH TOMATO SAUCE", "COTTAGE CHEESE TORTELLINI", "MEXICAN CORN RICE", "BROCCOLI IN BUTTER SAUCE", "SHRIMPS IN GARLIC BUTTER", "CHILLI CHICKEN", "HAKKA NOODLES", "VEG. IN HOT GARLIC SAUCE", "SCHEZWAN CHICKEN", "VEG MANCHURIAN", "CHILLI SOY NUGGETS", "STEAMED EGG WITH TOFU", "ALMOND & VEGETABLES STIR FRY"], "KIDS": ["CORN CHAAT", "VERMICELLI KHICHDI", "OMELETTE", "PIZZA", "GARLIC BREAD", "BREAD PUDDING", "CHEESY NACHOS", "CHOCOLATE BALLS", "STRAWBERRY CUSTARD", "VEG BURGER", "CHOCO BARS", "MUSHROOM & PEPPER PIZZA", "CHEESE BREAD DELIGHT", "NOODLE ROSTI", "APPLE PIE", "APPLE CUSTARD", "DHOKLA", "POHA", "UPMA", "BESAN CHEELA", "VEG SANDWICH", "PANEER SANDWICH", "MASALA CHEESE TOAST", "KHANDVI", "COTTAGE HONEY TOAST", "TOKRI CHAAT", "SPICY BABY CORN", "BREAD UPMA", "UGGANI", "UKADICHE MODAK", "CHOCOLATE CAKE", "LAMINGTON CAKE", "DOUGHNUTS", "NAN KHATAI", "WHOLE WHEAT COOKIES", "CHENA PODA", "VANILLA CAKE", "BUNS", "APPLE CUP CAKES", "EGGLESS CHOCOLATE CAKE", "SWISS ROLL", "PATTIES", "JEERA BISCUITS", "PINWHEEL COOKIES", "BROWNIE", "MUFFINS", "WALNUT CAKE", "CARROT CAKE", "MASALA BISCUITS", "CHEESE STRAW", "MOMOS", "SPROUTS", "STEAMED CHICKEN", "SARSON KA SAAG", "MATAR MUSHROOM", "BOILED EGGS", "GAJAR KA HALWA", "AVIAL", "SHORSHE ILISH", "ALUVADI", "RASIA MUTHIYA", "STEAMED PEAS", "BHAFOURI", "KEEMA BALLS", "METHI MUTHIYA", "FARA"], "ROTI": ["NAAN", "LACHHA PARANTHA", "APPAM", "THEPLA", "MASALA ROTI", "MISSI ROTI", "STUFFED NAAN", "KHASTA PARANTHA", "PUDINA PARANTHA", "RAJMA PARANTHA", "PANEER PARANTHA", "KULCHE", "ALOO PARANTHA", "PALAK PARANTHA", "GOBHI PARANTHA", "AJWAIN PARANTHA", "PAYAAZ PARANTHA", "CHATPATA PARANTHA", "ALOO GOBHI PARANTHA", "METHI PARANTHA", "CABBAGE PARANTHA", "CORN PARANTHA", "CARROT PARANTHA", "PEA PARANTHA", "MUSHROOM PARANTHA"], "DAIRY": ["TEA", "COFFEE", "MASALA TEA", "GINGER TEA", "TULSI TEA", "LEMON TEA", "BLACK TEA", "GREEN TEA", "SPICED CIDER TEA", "PEPPERMINT TEA", "PANEER", "MASALA PANEER", "CURD", "FLAVOURED YOGHURT"], "DOSA": ["MASALA DOSA", "BOMBAY MYSORE MASALA DOSA", "ONION RAVA DOSA", "PANEER CHILLI DOSA", "PALAK PANEER DOSA", "CORN DOSA", "MATAR PANEER DOSA", "MUSHROOM CHILLI DOSA", "GHEE"], "AID": ["KEEP WARM", "DEFROST VEG", "DEFROST NON VEG", "DE HUMIDIFICATION", "LIGHT DISINFECT", "BODY MASSAGE OIL", "PIZZA BASE", "YEAST DOUGH", "BOIL POTATOES", "LEMON SQUEEZE", "GARLIC PEEL", "TEAR FREE ONIONS", "CRISPY NUTS", "SMOOTH HONEY", "STALE TO FRESH BREAD", "STEAM CLEAN"]};
+const WEIGHT_OPTIONS={"CHARCOAL":[["1.0Kg"],["0.3Kg","0.4Kg","0.5Kg"],["0.3Kg","0.4Kg","0.5Kg"],["0.3Kg","0.4Kg","0.5Kg"],["0.2Kg","0.3Kg","0.4Kg"],["0.2Kg","0.3Kg","0.4Kg"],["0.2Kg","0.3Kg","0.4Kg","0.5Kg"],["0.2Kg","0.3Kg","0.4Kg"],["0.3Kg"],["0.2Kg","0.3Kg","0.4Kg"],["0.2Kg","0.3Kg","0.4Kg","0.5Kg"],["0.3Kg","0.4Kg","0.5Kg"],["0.3Kg"],["0.2Kg","0.3Kg","0.4Kg"],["0.2Kg","0.3Kg","0.4Kg"],["0.3Kg"],["0.3Kg","0.4Kg","0.5Kg"],["0.3Kg","0.4Kg","0.5Kg"],["0.5Kg"],["0.5Kg"],["0.4Kg"],["0.2Kg","0.3Kg","0.4Kg"],["0.4Kg"],["0.2Kg","0.3Kg","0.4Kg"],["0.1Kg","0.2Kg","0.3Kg"],["0.3Kg"],["0.2Kg","0.3Kg","0.4Kg"],["0.1Kg","0.2Kg","0.3Kg"],["0.2Kg"],["0.2Kg","0.3Kg","0.4Kg"],["0.1Kg","0.2Kg","0.3Kg","0.4Kg","0.5Kg"],["0.1Kg","0.2Kg","0.3Kg","0.4Kg","0.5Kg"],["0.2Kg","0.3Kg","0.4Kg"],["0.2Kg"],["0.1Kg","0.2Kg","0.3Kg","0.4Kg","0.5Kg"],["0.3Kg","0.4Kg","0.5Kg"],["0.4Kg"],["0.3Kg"],["0.6Kg"],["0.1Kg","0.2Kg","0.3Kg"],["0.3Kg"],["0.3Kg","0.4Kg","0.5Kg"],["0.1Kg","0.2Kg","0.3Kg"],["0.3Kg","0.4Kg","0.5Kg"],["0.3Kg"],["0.1Kg","0.2Kg","0.3Kg","0.4Kg","0.5Kg"],["0.1Kg","0.2Kg","0.3Kg","0.4Kg","0.5Kg"],["0.3Kg","0.4Kg","0.5Kg"],["0.1Kg","0.2Kg","0.3Kg"],["0.3Kg","0.4Kg","0.5Kg"],["0.2Kg","0.3Kg","0.4Kg"],["0.3Kg","0.4Kg","0.5Kg"],["0.1Kg","0.2Kg","0.3Kg"],["0.2Kg","0.3Kg","0.4Kg"],["0.6Kg"],["0.1Kg","0.2Kg","0.3Kg"],["6 Pc"],["0.3Kg"],["0.2Kg","0.3Kg","0.4Kg"],["0.2Kg","0.3Kg","0.4Kg","0.5Kg"],["0.1Kg","0.2Kg","0.3Kg"],["0.2Kg","0.3Kg","0.4Kg"],["0.3Kg","0.4Kg","0.5Kg"],["0.3Kg","0.4Kg","0.5Kg"],["0.3Kg","0.4Kg","0.5Kg"],["0.3Kg","0.4Kg","0.5Kg"],["0.3Kg","0.4Kg","0.5Kg"],["0.1Kg","0.2Kg","0.3Kg","0.4Kg","0.5Kg"],["0.2Kg","0.3Kg","0.4Kg"],["0.1Kg","0.2Kg","0.3Kg"],["0.1Kg","0.2Kg","0.3Kg"],["0.1Kg","0.2Kg","0.3Kg"],["0.1Kg","0.2Kg","0.3Kg"],["0.1Kg","0.2Kg","0.3Kg"],["0.3Kg"],["0.1Kg","0.2Kg","0.3Kg"],["0.2Kg","0.3Kg","0.4Kg"],["0.2Kg"],["0.3Kg"],["0.1Kg","0.2Kg","0.3Kg"],["0.3Kg"],["0.1Kg","0.2Kg","0.3Kg"],["0.5Kg"],["0.5Kg"],["0.4Kg"],["0.1Kg","0.2Kg","0.3Kg"],["0.2Kg"],["0.1Kg","0.2Kg","0.3Kg"],["0.3Kg"],["0.1Kg","0.2Kg","0.3Kg"],["0.1Kg","0.2Kg","0.3Kg","0.4Kg","0.5Kg"],["0.1Kg","0.2Kg","0.3Kg","0.4Kg","0.5Kg"],["0.1Kg","0.2Kg","0.3Kg","0.4Kg","0.5Kg"],["0.1Kg","0.2Kg","0.3Kg","0.4Kg","0.5Kg"],["0.1Kg","0.2Kg","0.3Kg","0.4Kg","0.5Kg"],["0.1Kg","0.2Kg","0.3Kg","0.4Kg","0.5Kg"],["0.1Kg","0.2Kg","0.3Kg","0.4Kg","0.5Kg"],[],["0.1Kg","0.2Kg","0.3Kg","0.4Kg","0.5Kg"],["0.1Kg","0.2Kg","0.3Kg","0.4Kg","0.5Kg"],["0.2Kg","0.3Kg","0.4Kg"],["0.1Kg","0.2Kg","0.3Kg"],["0.1Kg","0.2Kg","0.3Kg"],["0.1Kg","0.2Kg","0.3Kg"],["0.1Kg","0.2Kg","0.3Kg"],["0.1Kg","0.2Kg","0.3Kg","0.4Kg","0.5Kg"],["0.3Kg"],["0.1Kg","0.2Kg","0.3Kg"],["0.1Kg","0.2Kg","0.3Kg","0.4Kg","0.5Kg"],["0.2Kg","0.3Kg","0.4Kg","0.5Kg"],["0.3Kg"],["0.3Kg"],["0.3Kg"],["0.3Kg"],["0.5Kg"],["0.3Kg"],["0.2Kg"],["0.3Kg"],["0.3Kg"],["0.3Kg"],["0.2Kg"],["0.1Kg","0.2Kg","0.3Kg","0.4Kg"],["0.1Kg","0.2Kg","0.3Kg"],["0.5Kg"],["0.5Kg"]],"DIET":[["0.1Kg","0.2Kg","0.3Kg"],["0.2Kg"],["4 Pc"],["0.4Kg"],["10 Pc"],["8 Pc"],["5 Pc"],["0.2Kg","0.3Kg","0.4Kg"],["6 Pc"],["16 Pc"],["0.1Kg","0.2Kg","0.3Kg"],["0.3Kg"],["0.1Kg","0.2Kg","0.3Kg"],["0.1Kg"],["0.2Kg"],["0.1Kg"],["5 Pc"],["5 Pc"],["5 Pc"],["5 Pc"],["2 Pc"],["5 Pc"],["5 Pc"],["5 Pc"],["0.2Kg"],["0.1Kg","0.2Kg","0.3Kg"],["0.1Kg","0.2Kg","0.3Kg"],["0.2Kg"],["0.2Kg"],["0.3Kg"],["0.3Kg"],["0.3Kg"],["0.1Kg","0.2Kg","0.3Kg"],["0.1Kg","0.2Kg","0.3Kg"],["0.1Kg","0.2Kg","0.3Kg"],["0.1Kg","0.2Kg","0.3Kg"],["0.1Kg","0.2Kg","0.3Kg"],["0.1Kg","0.2Kg","0.3Kg"],["0.5Kg"],["0.5Kg"],["0.1Kg","0.2Kg","0.3Kg","0.4Kg","0.5Kg"],["0.1Kg","0.2Kg","0.3Kg","0.4Kg","0.5Kg"],["0.3Kg"],["0.1Kg","0.2Kg","0.3Kg","0.4Kg","0.5Kg"],["0.1Kg","0.2Kg","0.3Kg"],["0.2Kg"],["0.1Kg","0.2Kg","0.3Kg","0.4Kg","0.5Kg"],["0.3Kg"],["4 Pc","5 Pc","6 Pc","7 Pc","8 Pc"],["0.1Kg","0.2Kg","0.3Kg","0.4Kg"],["0.1Kg","0.2Kg","0.3Kg","0.4Kg","0.5Kg"],["0.1Kg","0.2Kg","0.3Kg"],["0.2Kg","0.3Kg","0.4Kg"],["0.2Kg"],["4 Pc","5 Pc","6 Pc","7 Pc","8 Pc"],["0.1Kg","0.2Kg","0.3Kg"],["0.4Kg"],["0.2Kg"],["0.3Kg"],["0.1Kg","0.2Kg","0.3Kg"],["0.3Kg"],["0.2Kg","0.3Kg","0.4Kg"],["0.1Kg","0.2Kg","0.3Kg"],["0.1Kg","0.2Kg","0.3Kg","0.4Kg","0.5Kg"],["0.1Kg","0.2Kg","0.3Kg"],["0.1Kg","0.2Kg","0.3Kg"],["0.6Kg"],["0.6Kg"],["0.6Kg"],["0.6Kg"],["0.6Kg"],["0.6Kg"],["0.6Kg"],["0.6Kg"],["0.6Kg"],["0.6Kg"],["0.6Kg"],["0.6Kg"],["0.6Kg"],["0.6Kg"],["0.6Kg"],["0.6Kg"],["0.6Kg"],["0.6Kg"],["0.6Kg"],["0.6Kg"],["0.1Kg","0.2Kg","0.3Kg"],["0.1Kg","0.2Kg","0.3Kg","0.4Kg","0.5Kg"],["0.1Kg","0.2Kg","0.3Kg","0.4Kg","0.5Kg"],["0.3Kg"],["0.3Kg"],["0.1Kg","0.2Kg","0.3Kg"],["0.1Kg","0.2Kg","0.3Kg"],["0.5Kg"],["0.1Kg","0.2Kg","0.3Kg"],["0.3Kg"],["0.1Kg","0.2Kg","0.3Kg","0.4Kg"],["0.1Kg","0.2Kg","0.3Kg"],["8 Pc"],["0.1Kg","0.2Kg","0.3Kg","0.4Kg"],["0.1Kg","0.2Kg","0.3Kg"],["0.4Kg"],["0.1Kg","0.2Kg","0.3Kg","0.4Kg"],["0.1Kg","0.2Kg","0.3Kg"],["0.1Kg","0.2Kg","0.3Kg"],["0.5Kg"],["0.6Kg"],["0.4Kg"],["0.1Kg","0.2Kg","0.3Kg"],["0.1Kg","0.2Kg","0.3Kg"]],"KIDS":[["0.1Kg","0.2Kg","0.3Kg"],["0.1Kg","0.2Kg","0.3Kg"],["0.2Kg","0.3Kg","0.4Kg"],["0.3Kg"],["0.3Kg"],["0.1Kg","0.2Kg","0.3Kg"],["0.3Kg"],["0.3Kg"],["0.5Kg"],["0.1Kg","0.2Kg","0.3Kg"],["0.2Kg"],["0.3Kg"],["8 Pc"],["0.2Kg"],["0.6Kg"],["0.1Kg","0.2Kg","0.3Kg"],["0.3Kg"],["0.1Kg","0.2Kg","0.3Kg"],["0.1Kg","0.2Kg","0.3Kg"],["1 Pc"],["0.1Kg","0.2Kg","0.3Kg"],["0.1Kg","0.2Kg","0.3Kg"],["0.1Kg","0.2Kg","0.3Kg"],["0.3Kg"],["0.1Kg","0.2Kg","0.3Kg"],["0.1Kg","0.2Kg","0.3Kg"],["0.1Kg","0.2Kg","0.3Kg"],["0.1Kg","0.2Kg","0.3Kg"],["0.3Kg"],["0.1Kg"],["0.4Kg"],["0.4Kg"],["0.2Kg"],["0.4Kg"],["0.3Kg"],["0.3Kg"],["0.4Kg"],["4 Pc"],["0.4Kg"],["0.5Kg"],["0.2Kg"],["3 Pc"],["0.2Kg"],["0.2Kg"],["0.3Kg"],["0.3Kg"],["0.2Kg"],["0.3Kg"],["0.2Kg"],["0.2Kg"],["0.1Kg","0.2Kg","0.3Kg"],["0.1Kg","0.2Kg","0.3Kg"],["0.1Kg","0.2Kg","0.3Kg","0.4Kg","0.5Kg"],["0.1Kg","0.2Kg","0.3Kg","0.4Kg"],["0.1Kg","0.2Kg","0.3Kg"],["2 Pc","3 Pc","4 Pc","5 Pc","6 Pc","7 Pc","8 Pc","9 Pc"],["0.3Kg"],["0.1Kg","0.2Kg","0.3Kg"],["0.3Kg"],["0.1Kg","0.2Kg","0.3Kg"],["0.1Kg","0.2Kg","0.3Kg"],["0.1Kg","0.2Kg","0.3Kg"],["0.1Kg","0.2Kg"],["0.1Kg","0.2Kg","0.3Kg"],["0.1Kg","0.2Kg","0.3Kg"],["0.1Kg","0.2Kg","0.3Kg"]],"ROTI":[["2 Pc"],["2 Pc"],["1 Pc"],["2 Pc"],["2 Pc"],["2 Pc"],["2 Pc"],["2 Pc"],["2 Pc"],["2 Pc"],["2 Pc"],["2 Pc"],["2 Pc"],["2 Pc"],["2 Pc"],["2 Pc"],["2 Pc"],["2 Pc"],["2 Pc"],["2 Pc"],["2 Pc"],["2 Pc"],["2 Pc"],["2 Pc"],["2 Pc"]],"DAIRY":[["1","2","3","4"],["1","2","3","4"],["1","2","3","4"],["1","2","3","4"],["1","2","3","4"],["1","2","3","4"],["1","2","3","4"],["1","2","3","4"],["1","2","3","4"],["1","2","3","4"],["0.5Kg"],["0.5Kg"],["0.5Kg"],["0.6Kg"]],"DOSA":[["1 Pc"],["1 Pc"],["1 Pc"],["1 Pc"],["1 Pc"],["1 Pc"],["1 Pc"],["1 Pc"],["0.5Kg"]],"AID":[["0.3Kg"],["0.2Kg","0.3Kg","0.4Kg","0.5Kg"],["0.5Kg","0.6Kg","0.7Kg","0.8Kg","0.9Kg","1.0Kg"],["0.3Kg"],[],["0.2Kg"],["0.2Kg"],["0.3Kg"],["0.3Kg"],["5 Pc"],["10 Cloves"],["5 Pc"],["0.1Kg"],["0.3Kg"],["2 Pc"],["0.3Kg"]]};
+
 function autoDisplayText(key,no){const a=EXACT_RECIPES[key]||[];const name=a[Math.max(0,Math.min(a.length-1,no-1))]||'';return `${no} ${name}`;}
 let st, hist=[];
-function resetState(){return {stage:'MODE',modeIndex:-1,mode:null,powerIndex:0,tempIndex:9,time:0,auto:null,autoIndex:1,weight:100,running:false,paused:false,angle:0};}
+function resetState(){return {stage:'MODE',modeIndex:-1,mode:null,powerIndex:0,tempIndex:9,time:0,auto:null,autoIndex:1,weight:100,weightIndex:0,running:false,paused:false,angle:0};}
 st=resetState();let timer={mode:'countdown',total:0,remaining:0,elapsed:0,running:false,lastTick:null};let timerInterval=null;
 const $=id=>document.getElementById(id);
 function snapshot(){hist.push(JSON.stringify(st));if(hist.length>50)hist.shift();}
+
+function currentWeightOptions(){
+  if(!st.auto)return [];
+  return (WEIGHT_OPTIONS[st.auto]&&WEIGHT_OPTIONS[st.auto][st.autoIndex-1])||[];
+}
+function currentWeightLabel(){
+  const opts=currentWeightOptions();
+  if(!opts.length)return '';
+  st.weightIndex=Math.max(0,Math.min(opts.length-1,st.weightIndex||0));
+  return opts[st.weightIndex];
+}
 function fmt(sec){return Math.floor(sec/60)+':'+String(sec%60).padStart(2,'0')}
 function timeStep(sec){if(sec<300)return 10;if(sec<600)return 30;return 60}
 function pulse(el){el.classList.remove('flash');void el.offsetWidth;el.classList.add('flash')}
@@ -372,8 +385,9 @@ function render(){
     return;
   }
   if(st.auto && st.stage==='WEIGHT'){
-    setMain('AUTO',(st.weight/1000).toFixed(2),'kg',autoDisplayText(st.auto,st.autoIndex),'','Turn the dial to the recipe weight / quantity.');
-    setGuide('Weight / quantity',`Recipe: ${autoDisplayText(st.auto,st.autoIndex)}.`,'Select the required value, then press START/Add 30secs.');
+    const opts=currentWeightOptions(), label=currentWeightLabel();
+    setMain('AUTO',label,'',autoDisplayText(st.auto,st.autoIndex),'',opts.length>1?'Turn the dial through this recipe’s allowed weight / quantity options.':'This recipe has one programmed weight / quantity.');
+    setGuide('Weight / quantity',`Recipe: ${autoDisplayText(st.auto,st.autoIndex)} · Options: ${opts.join(' / ')}`,'Match the real display, then press START/Add 30secs.');
     return;
   }
   if(st.stage==='MODE'){
@@ -410,14 +424,14 @@ function dialStep(dir){
   } else if(st.stage==='TIME'){
     st.time=Math.max(0,st.time+dir*timeStep(st.time));timerLoadFromCookTime();
   } else if(st.stage==='AUTO_SELECT'){
-    st.autoIndex=Math.max(1,Math.min(EXACT_RECIPES[st.auto].length,st.autoIndex+dir));
+    st.autoIndex=Math.max(1,Math.min(EXACT_RECIPES[st.auto].length,st.autoIndex+dir));st.weightIndex=0;
   } else if(st.stage==='WEIGHT'){
-    st.weight=Math.max(50,st.weight+dir*50);
+    const opts=currentWeightOptions();if(opts.length)st.weightIndex=Math.max(0,Math.min(opts.length-1,(st.weightIndex||0)+dir));
   }
   render();
 }
 function autoSelect(k,btn){
-  snapshot();st.auto=k;st.mode=null;st.modeIndex=-1;st.stage='AUTO_SELECT';st.autoIndex=1;st.running=false;st.paused=false;
+  snapshot();st.auto=k;st.mode=null;st.modeIndex=-1;st.stage='AUTO_SELECT';st.autoIndex=1;st.weightIndex=0;st.running=false;st.paused=false;
   pulse(btn);render();
 }
 function startKey(){
@@ -479,7 +493,7 @@ function startKey(){
     st.running=true;timerAutoBegin();render();return;
   }
 
-  if(st.stage==='AUTO_SELECT'){st.stage='WEIGHT';render();return}
+  if(st.stage==='AUTO_SELECT'){const opts=currentWeightOptions();if(!opts.length){st.running=true;st.time=0;timerAutoBegin();render();return}st.weightIndex=0;st.stage='WEIGHT';render();return}
   if(st.stage==='WEIGHT'){st.running=true;st.time=0;timerAutoBegin();render();return}
 
   if(st.paused){
@@ -557,7 +571,7 @@ for(const [key,names] of Object.entries(EXACT_RECIPES)){
       i===0?"Category 1 is the first selection — no dial turn":`Turn dial RIGHT ${i} ${i===1?'click':'clicks'}`,
       `Display should show “${i+1} ${name}”`,
       "Press START/Add 30secs to confirm category",
-      "Turn dial to select the required weight / quantity",
+      `Turn dial to select weight / quantity: ${WEIGHT_OPTIONS[key][i].length?WEIGHT_OPTIONS[key][i].join(' / '):'not required'}`, 
       "Press START/Add 30secs"
     ]
   }));
@@ -595,7 +609,7 @@ function renderRecipes(){
         <div><div class="rname">${r.name}</div><span class="vbadge verified">✓ MJ3286BRUS</span></div>
         <div class="rcode">CATEGORY ${r.categoryNo}</div>
       </div>
-      <div class="rmeta">${r.category}</div>
+      <div class="rmeta">${r.category} · Weight/Qty: ${r.weights.length?r.weights.join(" / "):"Not required"}</div>
       <div class="navbox"><div class="navtitle">HOW TO REACH THIS SETTING</div>${r.nav.map((s,n)=>`<div class="navstep"><b>${n+1}.</b> ${s}</div>`).join('')}</div>
       <button type="button" class="rgo" onclick="loadRecipe('${r.autoKey}',${r.categoryNo})">LOAD THIS RECIPE INTO TWIN →</button>
     </div>`).join('');
@@ -605,7 +619,7 @@ function loadRecipe(key,no){
   const btn=document.querySelector(`[data-auto="${key}"]`);
   if(btn){
     autoSelect(key,btn);
-    st.autoIndex=no;
+    st.autoIndex=no;st.weightIndex=0;
     render();
     setTimeout(()=>btn.scrollIntoView({behavior:'smooth',block:'center'}),30);
   }
