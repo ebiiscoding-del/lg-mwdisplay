@@ -1,0 +1,21 @@
+{
+  "name": "LG MJ3286BRUS Digital Twin",
+  "short_name": "LG Microwave",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#030405",
+  "theme_color": "#030405",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "icon-180.png",
+      "sizes": "180x180",
+      "type": "image/png"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

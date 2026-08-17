@@ -1,0 +1,408 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="theme-color" content="#050607">
+<title>LG MJ3286BRUS Digital Twin v4</title>
+<style>
+:root{
+  --bg:#030405; --panel:#0a0b0c; --panel2:#111315; --edge:#3a3d40;
+  --text:#eeeeec; --muted:#8c9194; --green:#b7ff5a; --green2:#8edb38;
+  --lcd:#a8ea55; --red:#ff4b4f; --disabled:#44484b;
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{
+  margin:0;background:#020304;color:var(--text);
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;
+  overscroll-behavior:none;touch-action:manipulation;
+}
+body{min-height:100vh;padding:8px 8px calc(16px + env(safe-area-inset-bottom));overflow-x:hidden}
+.app{max-width:520px;margin:auto}
+.topbar{display:flex;justify-content:space-between;align-items:center;margin:3px 4px 9px}
+.title{font-weight:700;font-size:14px;letter-spacing:.04em}
+.pill{font-size:10px;border:1px solid var(--green2);border-radius:999px;padding:4px 8px;color:var(--green)}
+.fascia{
+  background:
+    radial-gradient(circle at 18% 12%,rgba(255,255,255,.04),transparent 22%),
+    linear-gradient(155deg,#151719,#060708 52%,#101214);
+  border:1px solid #35383b;border-radius:10px;
+  box-shadow:inset 0 0 38px #000,0 18px 35px #000;
+  padding:13px 11px 12px;
+}
+.modebar{display:grid;grid-template-columns:repeat(5,1fr);gap:3px;margin:0 8px 9px}
+.modebtn{
+  border:0;background:transparent;color:#b5b8ba;font-size:12px;padding:4px 1px;
+  transition:.12s;opacity:.62
+}
+.modebtn .sym{
+  width:32px;height:28px;margin:0 auto 3px;border:1px solid #696d70;border-radius:4px;
+  display:flex;align-items:center;justify-content:center;font-size:18px
+}
+.modebtn.enabled{opacity:1;color:#ddd}
+.modebtn.active{opacity:1;color:var(--green);text-shadow:0 0 10px rgba(183,255,90,.5)}
+.modebtn.active .sym{border-color:var(--green2);box-shadow:0 0 12px rgba(142,219,56,.45)}
+.modebtn.disabled{opacity:.28;pointer-events:none}
+.mainlcd,.minilcd{
+  border:2px inset #2f3335;background:linear-gradient(#1d211f,#0b0e0c);
+  box-shadow:inset 0 0 18px #000;color:var(--lcd);font-family:Menlo,Consolas,monospace
+}
+.mainlcd{height:177px;margin:0 10px 15px;border-radius:8px;padding:10px 12px}
+.icons{font-size:11px;letter-spacing:4px;opacity:.35;white-space:nowrap;overflow:hidden}
+.statusline{text-align:center;font-size:13px;margin-top:3px;letter-spacing:.05em}
+.bigline{display:flex;justify-content:center;align-items:end;height:85px}
+.big{font-size:49px;line-height:1}.unit{font-size:18px;margin:0 0 7px 5px}
+.lowerline{display:flex;justify-content:center;gap:34px;font-size:14px}
+.lowerline .modeText{min-width:90px;text-align:right}
+.lowerline .powerText{min-width:80px;text-align:left}
+.hint{text-align:center;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;color:#879083;font-size:10px;margin-top:8px}
+
+.auto-title{text-align:center;font-size:18px;margin:3px 0 9px}
+.autogrid{display:grid;grid-template-columns:1fr 1fr;border:1px solid #3b3f42;border-radius:7px;overflow:hidden;margin:0 8px}
+.autogrid button{
+  min-height:54px;padding:6px;border:0;border-right:1px solid #45484b;border-bottom:1px solid #45484b;
+  background:linear-gradient(#222528,#111315);color:#e7e7e7;font-size:14px;transition:.12s
+}
+.autogrid button:nth-child(2n){border-right:0}.autogrid .wide{grid-column:1/3;border-right:0}
+.autogrid button.active{color:var(--green);box-shadow:inset 0 0 18px rgba(142,219,56,.12),0 0 10px rgba(142,219,56,.2)}
+.autogrid button.disabled{color:#686d70;background:#111315;opacity:.45;pointer-events:none}
+
+.minilcd-wrap{margin:14px 45px 5px}
+.minilcd{
+  height:82px;border-radius:50%;display:flex;align-items:center;justify-content:center;position:relative;
+  background:radial-gradient(circle,#1a1d1b 0 52%,#0b0d0c 53% 61%,#242724 62%);
+}
+.minilcd:before{content:"";position:absolute;inset:8px;border-radius:50%;border:6px dashed #4f544d;opacity:.55}
+.mini-inner{position:relative;z-index:2;text-align:center}
+.mini-top{font-size:9px;letter-spacing:.08em}
+.mini-main{font-size:24px;line-height:1.05}
+.mini-sub{font-size:9px;margin-top:2px}
+
+.dial-label{text-align:center;color:#ddd;font-size:16px;margin-top:3px}
+.dialarea{display:grid;grid-template-columns:1fr 118px 1fr;align-items:center;gap:4px;margin:6px 28px 2px}
+.turnbtn{
+  border:0;background:transparent;color:#e8e8e8;font-size:34px;height:75px;
+  touch-action:none;user-select:none;-webkit-user-select:none
+}
+.knob{
+  width:112px;height:112px;border-radius:50%;border:2px solid #74787b;
+  background:radial-gradient(circle at 36% 25%,#85888b,#45484a 45%,#191b1c 72%);
+  box-shadow:inset 0 0 0 6px #25282a,0 6px 12px #000;position:relative;
+  touch-action:none;user-select:none;-webkit-user-select:none;cursor:grab;
+}
+.knob:active{cursor:grabbing}
+.knob:before{content:"";position:absolute;inset:-13px;border-radius:50%;border:6px dashed #4c514a;opacity:.9}
+.knob:after{
+  content:"";position:absolute;left:54px;top:7px;width:3px;height:19px;background:var(--green);
+  transform-origin:1.5px 48px;transform:rotate(var(--rot,0deg));
+  box-shadow:0 0 7px rgba(183,255,90,.7)
+}
+.dialdir{text-align:center;font-size:10px;color:#888e90;margin-bottom:3px}
+.energy{display:flex;justify-content:space-between;margin:2px 12px 1px;font-size:10px;color:#9ca0a2}
+.actions{display:grid;grid-template-columns:1fr 1fr;margin:8px 7px 0}
+.actions button{
+  height:52px;background:linear-gradient(#25282a,#111315);border:1px solid #555;color:#fff;font-size:18px;font-weight:650
+}
+.stop{border-radius:7px 0 0 7px;border-bottom:5px solid var(--red)!important}
+.start{border-radius:0 7px 7px 0;border-bottom:5px solid #e9e9e6!important}
+.actions button.disabled{opacity:.38;color:#727779;pointer-events:none}
+.actions button.active{box-shadow:inset 0 0 18px rgba(183,255,90,.08)}
+
+.guide{margin:12px 5px 0;border:1px solid #2c3032;border-radius:8px;background:#0b0d0e;padding:10px}
+.guide h3{margin:0 0 7px;font-size:13px;color:var(--green);font-weight:600}
+.step{font-size:12px;color:#d0d2d3;line-height:1.45}
+.note{font-size:10px;color:#858b8e;line-height:1.45;margin-top:4px}
+.toolbar{display:flex;gap:7px;margin-top:9px}.toolbar button{flex:1;border:1px solid #3a3e40;border-radius:6px;background:#151719;color:#bec2c4;padding:8px;font-size:11px}
+.footer{margin-top:10px;text-align:center;color:#757b7e;font-size:9px;line-height:1.4}
+.flash{animation:flash .22s ease-out}@keyframes flash{0%{filter:brightness(1.7)}100%{filter:none}}
+</style>
+
+<link rel="manifest" href="manifest.json">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="LG Microwave">
+<link rel="apple-touch-icon" href="icon-180.png">
+
+</head>
+<body>
+<div class="app">
+  <div class="topbar">
+    <div class="title">LG MJ3286BRUS</div>
+    <div class="pill">● DIGITAL TWIN</div>
+  </div>
+
+  <div class="fascia">
+    <div class="modebar">
+      <button class="modebtn enabled" id="modeMICRO"><span class="sym">≋</span>Micro</button>
+      <button class="modebtn enabled" id="modeGRILL"><span class="sym">⌁</span>Grill</button>
+      <button class="modebtn enabled" id="modeCONV"><span class="sym">✣</span>Conv.</button>
+      <button class="modebtn enabled" id="modeCG"><span class="sym">⌁≋</span>Combi.</button>
+      <button class="modebtn enabled" id="modeCC"><span class="sym">✣≋</span>Combi.</button>
+    </div>
+
+    <div class="mainlcd" id="mainlcd">
+      <div class="icons">sensor auto speed ≋ ⌁ ✣ COOK ❄</div>
+      <div class="statusline" id="statusline">MANUAL</div>
+      <div class="bigline"><span class="big" id="big">0:00</span><span class="unit" id="unit"></span></div>
+      <div class="lowerline">
+        <span class="modeText" id="lowerMode">READY</span>
+        <span class="powerText" id="lowerPower"></span>
+      </div>
+      <div class="hint" id="hint">Press STOP/CLEAR on the microwave, then keep each input mirrored here.</div>
+    </div>
+
+    <div class="auto-title">SELECT AUTO COOKING</div>
+    <div class="autogrid">
+      <button class="wide" data-auto="CHARCOAL" onclick="autoSelect('CHARCOAL',this)">Charcoal/Indian Cuisine</button>
+      <button data-auto="DIET" onclick="autoSelect('DIET',this)">Diet Fry/<br>Low Calorie</button>
+      <button data-auto="KIDS" onclick="autoSelect('KIDS',this)">Kids’ Delight/<br>Steam Chef</button>
+      <button data-auto="ROTI" onclick="autoSelect('ROTI',this)">Indian Roti<br>Basket</button>
+      <button data-auto="DAIRY" onclick="autoSelect('DAIRY',this)">Tea/<br>Dairy Delight</button>
+      <button data-auto="DOSA" onclick="autoSelect('DOSA',this)">Dosa/<br>Ghee</button>
+      <button data-auto="AID" onclick="autoSelect('AID',this)">Cooking Aid/<br>Steam Clean</button>
+    </div>
+
+    <div class="minilcd-wrap">
+      <div class="minilcd">
+        <div class="mini-inner">
+          <div class="mini-top" id="miniTop">MANUAL</div>
+          <div class="mini-main" id="miniMain">0:00</div>
+          <div class="mini-sub" id="miniSub">READY</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="dial-label">Manual Mode / Time / Weight</div>
+    <div class="dialarea">
+      <button class="turnbtn" id="minus" aria-label="Turn dial left">−</button>
+      <div class="knob" id="knob" role="slider" aria-label="Rotary dial"></div>
+      <button class="turnbtn" id="plus" aria-label="Turn dial right">+</button>
+    </div>
+    <div class="dialdir">drag/rotate the knob, or tap − / + one detent at a time</div>
+
+    <div class="energy"><span>◉ ENERGY SAVING</span><span>Add 30 secs.</span></div>
+    <div class="actions">
+      <button class="stop" id="stopBtn" onclick="stopClear()">STOP/CLEAR</button>
+      <button class="start" id="startBtn" onclick="startKey()">◇ START</button>
+    </div>
+
+    <div class="guide">
+      <h3 id="guideTitle">Ready</h3>
+      <div class="step" id="guideStep">Reset the real microwave with STOP/CLEAR, then mirror each dial detent and button press here.</div>
+      <div class="note" id="guideNote">Enabled controls glow; unavailable controls dim automatically according to the current state.</div>
+      <div class="toolbar">
+        <button onclick="undo()">↶ Undo</button>
+        <button onclick="hardReset()">Reset Twin</button>
+      </div>
+    </div>
+
+    <div class="footer">Visual navigation aid only. This app does not connect electrically to the microwave. If the real oven and twin disagree, press STOP/CLEAR on both and resynchronise.</div>
+  </div>
+</div>
+
+<script>
+const MODES=['MICRO','GRILL','CONV','CG','CC'];
+const MODE_LABEL={MICRO:'MICRO',GRILL:'GRILL',CONV:'CONV.',CG:'COMBI.',CC:'COMBI.'};
+const POWER=[900,720,540,360,180];
+const TEMP=[40,100,110,120,130,140,150,160,170,180,190,200,210,220,230];
+const AUTO={
+  CHARCOAL:{prefix:'IC',name:'Charcoal / Indian Cuisine'},
+  DIET:{prefix:'DF',name:'Diet Fry / Low Calorie'},
+  KIDS:{prefix:'SC',name:"Kids’ Delight / Steam Chef"},
+  ROTI:{prefix:'RB',name:'Indian Roti Basket'},
+  DAIRY:{prefix:'DA',name:'Tea / Dairy Delight'},
+  DOSA:{prefix:'DG',name:'Dosa / Ghee'},
+  AID:{prefix:'CA',name:'Cooking Aid / Steam Clean'}
+};
+let st, hist=[];
+function resetState(){return {stage:'MODE',modeIndex:-1,mode:null,powerIndex:0,tempIndex:9,time:0,auto:null,autoIndex:1,weight:100,running:false,paused:false,angle:0};}
+st=resetState();
+const $=id=>document.getElementById(id);
+function snapshot(){hist.push(JSON.stringify(st));if(hist.length>50)hist.shift();}
+function fmt(sec){return Math.floor(sec/60)+':'+String(sec%60).padStart(2,'0')}
+function timeStep(sec){if(sec<300)return 10;if(sec<600)return 30;return 60}
+function pulse(el){el.classList.remove('flash');void el.offsetWidth;el.classList.add('flash')}
+function setGuide(t,s,n=''){ $('guideTitle').textContent=t; $('guideStep').textContent=s; $('guideNote').textContent=n; }
+function setMain(top,big,unit,mode,power,hint){
+  $('statusline').textContent=top||'';
+  $('big').textContent=big||'';
+  $('unit').textContent=unit||'';
+  $('lowerMode').textContent=mode||'';
+  $('lowerPower').textContent=power||'';
+  $('hint').textContent=hint||'';
+  setMini(top,big,mode,power);
+}
+function setMini(top,big,mode,power){
+  $('miniTop').textContent=top||'';
+  $('miniMain').textContent=big||'';
+  $('miniSub').textContent=[mode,power].filter(Boolean).join(' · ');
+}
+function updateHighlights(){
+  MODES.forEach(m=>{
+    const el=$('mode'+m);
+    el.classList.toggle('active',st.mode===m);
+    el.classList.toggle('disabled',st.stage==='AUTO_SELECT'||st.stage==='WEIGHT'||st.running);
+  });
+  document.querySelectorAll('[data-auto]').forEach(b=>{
+    b.classList.toggle('active',b.dataset.auto===st.auto);
+    b.classList.toggle('disabled',st.running || (st.mode && ['POWER','TEMP','TIME'].includes(st.stage)));
+  });
+  $('startBtn').classList.toggle('disabled',false);
+  $('startBtn').classList.toggle('active',st.running);
+}
+function setAngle(a){st.angle=((a%360)+360)%360;$('knob').style.setProperty('--rot',st.angle+'deg')}
+function render(){
+  updateHighlights();
+  if(st.running){
+    setMain('MANUAL',fmt(st.time),'',st.auto?'AUTO':MODE_LABEL[st.mode],st.mode==='MICRO'?POWER[st.powerIndex]+'W':'','Cooking in progress.');
+    setGuide('Cooking','START adds 30 seconds. STOP pauses/cancels.','Keep both oven and app inputs synchronized.');
+    return;
+  }
+  if(st.auto && st.stage==='AUTO_SELECT'){
+    setMain('AUTO',AUTO[st.auto].prefix+st.autoIndex,'',AUTO[st.auto].name,'','Turn the dial to the recipe code, then START.');
+    setGuide('Auto Cook','Select the same recipe number on the real oven, then press START on both.','Recipe-specific food mappings depend on the LG recipe booklet.');
+    return;
+  }
+  if(st.auto && st.stage==='WEIGHT'){
+    setMain('AUTO',(st.weight/1000).toFixed(2),'kg',AUTO[st.auto].name,'','Set the same weight/quantity on the real oven.');
+    setGuide('Weight / quantity','Turn the dial to match the real oven prompt, then START.','If that recipe starts immediately on the real oven, press START here once more.');
+    return;
+  }
+  if(st.stage==='MODE'){
+    const m=st.mode?MODE_LABEL[st.mode]:'READY';
+    setMain('MANUAL',st.mode?m:'0:00','',m,'','Turn the dial to select Micro / Grill / Conv. / Combi.');
+    setGuide('Select mode','Rotate the real dial and this dial one detent at a time.','The mode indicators highlight as they become selected.');
+    return;
+  }
+  if(st.stage==='POWER'){
+    setMain('MANUAL',POWER[st.powerIndex],'W',MODE_LABEL[st.mode],POWER[st.powerIndex]+'W','Turn dial for power, then START.');
+    setGuide('Set power','Choose the same microwave power level on both.','Power levels: 900 / 720 / 540 / 360 / 180 W.');
+    return;
+  }
+  if(st.stage==='TEMP'){
+    setMain('MANUAL',TEMP[st.tempIndex],'°C',MODE_LABEL[st.mode],'','Turn dial for temperature, then START.');
+    setGuide('Set temperature','Choose the same convection temperature on both.','Supported range: 40°C and 100–230°C.');
+    return;
+  }
+  if(st.stage==='TIME'){
+    setMain('MANUAL',fmt(st.time),'',MODE_LABEL[st.mode],st.mode==='MICRO'?POWER[st.powerIndex]+'W':'','Turn dial for cooking time, then START.');
+    setGuide('Set time','Set the same cooking time on both, then press START.','The circular display above the dial mirrors time/mode/power too.');
+  }
+}
+function dialStep(dir){
+  snapshot();
+  setAngle(st.angle+dir*18); pulse($('knob'));
+  if(st.running){return}
+  if(st.stage==='MODE'){
+    st.modeIndex=(st.modeIndex+dir+MODES.length)%MODES.length;st.mode=MODES[st.modeIndex];st.auto=null;
+  } else if(st.stage==='POWER'){
+    st.powerIndex=Math.max(0,Math.min(POWER.length-1,st.powerIndex+dir));
+  } else if(st.stage==='TEMP'){
+    st.tempIndex=Math.max(0,Math.min(TEMP.length-1,st.tempIndex+dir));
+  } else if(st.stage==='TIME'){
+    st.time=Math.max(0,st.time+dir*timeStep(st.time));
+  } else if(st.stage==='AUTO_SELECT'){
+    st.autoIndex=Math.max(1,st.autoIndex+dir);
+  } else if(st.stage==='WEIGHT'){
+    st.weight=Math.max(50,st.weight+dir*50);
+  }
+  render();
+}
+function autoSelect(k,btn){
+  snapshot();st.auto=k;st.mode=null;st.modeIndex=-1;st.stage='AUTO_SELECT';st.autoIndex=1;st.running=false;st.paused=false;
+  pulse(btn);render();
+}
+function startKey(){
+  snapshot();pulse($('startBtn'));
+  if(st.running){st.time+=30;render();return}
+  if(st.stage==='MODE'){
+    if(!st.mode){st.mode='MICRO';st.modeIndex=0}
+    if(st.mode==='MICRO'){st.stage='POWER';st.powerIndex=0}
+    else if(st.mode==='GRILL'){st.stage='TIME';st.time=0}
+    else if(st.mode==='CONV'){st.stage='TEMP';st.tempIndex=9}
+    else if(st.mode==='CG'){st.stage='POWER';st.powerIndex=3}
+    else if(st.mode==='CC'){st.stage='TEMP';st.tempIndex=9}
+    render();return;
+  }
+  if(st.stage==='POWER'){
+    st.stage='TIME';st.time=0;render();return;
+  }
+  if(st.stage==='TEMP'){
+    if(st.mode==='CC'){st.stage='POWER';st.powerIndex=3}else{st.stage='TIME';st.time=0}
+    render();return;
+  }
+  if(st.stage==='TIME'){
+    if(st.time<=0)st.time=30;
+    st.running=true;render();return;
+  }
+  if(st.stage==='AUTO_SELECT'){st.stage='WEIGHT';render();return}
+  if(st.stage==='WEIGHT'){st.running=true;st.time=0;render();return}
+  if(st.paused){st.running=true;st.paused=false;render()}
+}
+function stopClear(){
+  snapshot();pulse($('stopBtn'));
+  if(st.running){st.running=false;st.paused=true;setGuide('Paused','Press START to resume, or STOP/CLEAR again to reset.','Mirror the same action on the real microwave.');return}
+  hardReset(false);
+}
+function hardReset(save=true){
+  if(save)snapshot();st=resetState();setAngle(0);render();
+}
+function undo(){if(!hist.length)return;st=JSON.parse(hist.pop());setAngle(st.angle||0);render()}
+
+// Tap controls
+$('minus').addEventListener('click',()=>dialStep(-1));
+$('plus').addEventListener('click',()=>dialStep(1));
+
+// Prevent scrolling while operating dial.
+['touchstart','touchmove','touchend','pointerdown','pointermove','pointerup'].forEach(evt=>{
+  $('knob').addEventListener(evt,e=>{ if(evt==='touchmove') e.preventDefault(); },{passive:false});
+});
+['touchstart','touchmove'].forEach(evt=>{
+  $('minus').addEventListener(evt,e=>e.preventDefault(),{passive:false});
+  $('plus').addEventListener(evt,e=>e.preventDefault(),{passive:false});
+});
+
+// Rotary drag / swipe behavior.
+let dragging=false,lastAngle=null,lastStepAngle=0;
+function pointAngle(e){
+  const r=$('knob').getBoundingClientRect();
+  const cx=r.left+r.width/2, cy=r.top+r.height/2;
+  const x=(e.touches?e.touches[0].clientX:e.clientX)-cx;
+  const y=(e.touches?e.touches[0].clientY:e.clientY)-cy;
+  return Math.atan2(y,x)*180/Math.PI;
+}
+function normDelta(d){while(d>180)d-=360;while(d<-180)d+=360;return d}
+function begin(e){e.preventDefault();dragging=true;lastAngle=pointAngle(e);lastStepAngle=0;$('knob').setPointerCapture?.(e.pointerId)}
+function move(e){
+  if(!dragging)return;e.preventDefault();
+  const a=pointAngle(e), d=normDelta(a-lastAngle);lastAngle=a;lastStepAngle+=d;
+  while(lastStepAngle>=14){dialStep(1);lastStepAngle-=14}
+  while(lastStepAngle<=-14){dialStep(-1);lastStepAngle+=14}
+}
+function end(e){if(!dragging)return;e.preventDefault();dragging=false;lastAngle=null;lastStepAngle=0}
+$('knob').addEventListener('pointerdown',begin,{passive:false});
+window.addEventListener('pointermove',move,{passive:false});
+window.addEventListener('pointerup',end,{passive:false});
+$('knob').addEventListener('touchstart',begin,{passive:false});
+window.addEventListener('touchmove',move,{passive:false});
+window.addEventListener('touchend',end,{passive:false});
+
+// Lock page scroll while interacting with the dial region.
+document.addEventListener('touchmove',e=>{
+  if(dragging || e.target.closest('.dialarea')) e.preventDefault();
+},{passive:false});
+
+render();
+</script>
+
+<script>
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('./sw.js').catch(()=>{});
+  });
+}
+</script>
+
+</body>
+</html>
