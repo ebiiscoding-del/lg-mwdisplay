@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="theme-color" content="#050607">
-<title>LG MJ3286BRUS Digital Twin v8</title>
+<title>LG MJ3286BRUS Digital Twin v9</title>
 <style>
 :root{
   --bg:#030405; --panel:#0a0b0c; --panel2:#111315; --edge:#3a3d40;
@@ -340,6 +340,15 @@ function timerStart(){
   timer.running=true;timer.lastTick=Date.now();timerPaint();
 }
 function timerPause(){timer.running=false;timer.lastTick=null;timerPaint()}
+function timerClearToZero(){
+  timer.running=false;
+  timer.lastTick=null;
+  timer.mode='countdown';
+  timer.total=0;
+  timer.remaining=0;
+  timer.elapsed=0;
+  timerPaint();
+}
 function timerReset(){
   timer.running=false;timer.lastTick=null;
   if(timer.mode==='elapsed'){timer.elapsed=0}else{timer.remaining=timer.total||st.time||0}
@@ -492,7 +501,7 @@ function startKey(){
 }
 function stopClear(){
   snapshot();pulse($('stopBtn'));
-  if(st.running){st.running=false;st.paused=true;timerPause();setGuide('Paused','Press START to resume, or STOP/CLEAR again to reset.','Mirror the same action on the real microwave.');return}
+  if(st.running){st.running=false;st.paused=true;timerPause();setGuide('Paused','Press START to resume, or STOP/CLEAR again to clear.','A second STOP/CLEAR resets the twin and timer to 0:00. Mirror the same action on the real microwave.');return}
   hardReset(false);
 }
 function hardReset(save=true){
