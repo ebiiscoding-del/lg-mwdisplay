@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="theme-color" content="#050607">
-<title>LG MJ3286BRUS Digital Twin v11</title>
+<title>LG MJ3286BRUS Digital Twin v12</title>
 <style>
 :root{
   --bg:#030405; --panel:#0a0b0c; --panel2:#111315; --edge:#3a3d40;
@@ -217,7 +217,7 @@ body{min-height:100vh;padding:8px 8px calc(16px + env(safe-area-inset-bottom));o
       <div class="timeractions">
         <button class="timerstart" onclick="timerStart()">▶ START</button>
         <button class="timerstop" onclick="timerPause()">Ⅱ PAUSE</button>
-        <button onclick="timerReset()">↺ RESET</button>
+        <button onclick="timerReset()">↺ RESET TO 0</button>
       </div>
     </div>
 
@@ -350,8 +350,12 @@ function timerClearToZero(){
   timerPaint();
 }
 function timerReset(){
-  timer.running=false;timer.lastTick=null;
-  if(timer.mode==='elapsed'){timer.elapsed=0}else{timer.remaining=timer.total||st.time||0}
+  timer.running=false;
+  timer.lastTick=null;
+  timer.mode='countdown';
+  timer.total=0;
+  timer.remaining=0;
+  timer.elapsed=0;
   timerPaint();
 }
 function timerAutoBegin(){
@@ -501,12 +505,24 @@ function startKey(){
   }
 }
 function stopClear(){
-  snapshot();pulse($('stopBtn'));
-  if(st.running){st.running=false;st.paused=true;timerPause();setGuide('Paused','Press START to resume, or STOP/CLEAR again to clear.','A second STOP/CLEAR resets the twin and timer to 0:00. Mirror the same action on the real microwave.');return}
+  snapshot();
+  pulse($('stopBtn'));
+  if(st.running){
+    st.running=false;
+    st.paused=true;
+    timerPause();
+    setGuide('Paused','Press START to resume, or STOP/CLEAR again to clear.','A second STOP/CLEAR resets both display and timer to 0:00.');
+    return;
+  }
+  timerClearToZero();
   hardReset(false);
 }
 function hardReset(save=true){
-  if(save)snapshot();st=resetState();let timer={mode:'countdown',total:0,remaining:0,elapsed:0,running:false,lastTick:null};let timerInterval=null;setAngle(0);render();
+  if(save)snapshot();
+  st=resetState();
+  timerClearToZero();
+  setAngle(0);
+  render();
 }
 function undo(){if(!hist.length)return;st=JSON.parse(hist.pop());setAngle(st.angle||0);render()}
 
@@ -590,29 +606,53 @@ function setView(v){
 function renderChips(){
   const c=document.getElementById('chips');
   if(!c)return;
-  c.innerHTML=BOOK_CATEGORIES.map((x,i)=>`<button type="button" class="chip ${x===bookCategory?'active':''}" data-cat-index="${i}">${x}</button>`).join('');
+  c.innerHTML='';
+  BOOK_CATEGORIES.forEach(cat=>{
+    const b=document.createElement('button');
+    b.type='button';
+    b.className='chip'+(cat===bookCategory?' active':'');
+    b.textContent=cat;
+    b.onclick=()=>{bookCategory=cat;renderRecipes();};
+    c.appendChild(b);
+  });
 }
 function renderRecipes(){
   renderChips();
   const q=(document.getElementById('bookSearch')?.value||'').trim().toLowerCase();
   const arr=RECIPES.filter(r=>{
-    const cat=bookCategory==='All'||r.category===bookCategory;
-    const txt=[r.name,r.category,String(r.categoryNo)].join(' ').toLowerCase();
-    return cat && (!q||txt.includes(q));
+    const categoryOK=(bookCategory==='All'||r.category===bookCategory);
+    const hay=(r.name+' '+r.category+' '+r.categoryNo).toLowerCase();
+    return categoryOK && (!q||hay.includes(q));
   });
   const g=document.getElementById('recipeGrid');
   if(!g)return;
-  if(!arr.length){g.innerHTML='<div class="empty">No recipes match this search.</div>';return;}
-  g.innerHTML=arr.map(r=>`
-    <div class="recipe verified">
-      <div class="rhead">
-        <div><div class="rname">${r.name}</div><span class="vbadge verified">✓ MJ3286BRUS</span></div>
-        <div class="rcode">CATEGORY ${r.categoryNo}</div>
-      </div>
-      <div class="rmeta">${r.category} · Weight/Qty: ${r.weights.length?r.weights.join(" / "):"Not required"}</div>
-      <div class="navbox"><div class="navtitle">HOW TO REACH THIS SETTING</div>${r.nav.map((s,n)=>`<div class="navstep"><b>${n+1}.</b> ${s}</div>`).join('')}</div>
-      <button type="button" class="rgo" onclick="loadRecipe('${r.autoKey}',${r.categoryNo})">LOAD THIS RECIPE INTO TWIN →</button>
-    </div>`).join('');
+  g.innerHTML='';
+  if(!arr.length){
+    const e=document.createElement('div');
+    e.className='empty';
+    e.textContent='No recipes match this search.';
+    g.appendChild(e);
+    return;
+  }
+  for(const r of arr){
+    const card=document.createElement('div'); card.className='recipe verified';
+    const head=document.createElement('div'); head.className='rhead';
+    const left=document.createElement('div');
+    const nm=document.createElement('div'); nm.className='rname'; nm.textContent=r.name;
+    const badge=document.createElement('span'); badge.className='vbadge verified'; badge.textContent='✓ MJ3286BRUS';
+    left.appendChild(nm); left.appendChild(badge);
+    const code=document.createElement('div'); code.className='rcode'; code.textContent='CATEGORY '+r.categoryNo;
+    head.appendChild(left); head.appendChild(code); card.appendChild(head);
+    const meta=document.createElement('div'); meta.className='rmeta'; meta.textContent=r.category; card.appendChild(meta);
+    const nav=document.createElement('div'); nav.className='navbox';
+    const nt=document.createElement('div'); nt.className='navtitle'; nt.textContent='HOW TO REACH THIS SETTING'; nav.appendChild(nt);
+    r.nav.forEach((s,n)=>{const st=document.createElement('div');st.className='navstep';const num=document.createElement('b');num.textContent=(n+1)+'.';st.appendChild(num);st.appendChild(document.createTextNode(' '+s));nav.appendChild(st);});
+    card.appendChild(nav);
+    const opts=getWeightOptions(r.autoKey,r.categoryNo);
+    if(opts&&opts.length){const wt=document.createElement('div');wt.className='rnote';wt.textContent='Weight / quantity options: '+opts.join(' · ');card.appendChild(wt);}
+    const go=document.createElement('button');go.type='button';go.className='rgo';go.textContent='LOAD THIS RECIPE INTO TWIN →';go.onclick=()=>loadRecipe(r.autoKey,r.categoryNo);card.appendChild(go);
+    g.appendChild(card);
+  }
 }
 function loadRecipe(key,no){
   setView('panel');
