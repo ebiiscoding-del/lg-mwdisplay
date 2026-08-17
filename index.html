@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="theme-color" content="#050607">
-<title>LG MJ3286BRUS Digital Twin v4</title>
+<title>LG MJ3286BRUS Digital Twin v6</title>
 <style>
 :root{
   --bg:#030405; --panel:#0a0b0c; --panel2:#111315; --edge:#3a3d40;
@@ -68,16 +68,16 @@ body{min-height:100vh;padding:8px 8px calc(16px + env(safe-area-inset-bottom));o
 .autogrid button.active{color:var(--green);box-shadow:inset 0 0 18px rgba(142,219,56,.12),0 0 10px rgba(142,219,56,.2)}
 .autogrid button.disabled{color:#686d70;background:#111315;opacity:.45;pointer-events:none}
 
-.minilcd-wrap{margin:14px 45px 5px}
-.minilcd{
-  height:82px;border-radius:50%;display:flex;align-items:center;justify-content:center;position:relative;
-  background:radial-gradient(circle,#1a1d1b 0 52%,#0b0d0c 53% 61%,#242724 62%);
-}
-.minilcd:before{content:"";position:absolute;inset:8px;border-radius:50%;border:6px dashed #4f544d;opacity:.55}
-.mini-inner{position:relative;z-index:2;text-align:center}
-.mini-top{font-size:9px;letter-spacing:.08em}
-.mini-main{font-size:24px;line-height:1.05}
-.mini-sub{font-size:9px;margin-top:2px}
+.timerbox{margin:14px 8px 7px;border:1px solid #3a3e40;border-radius:9px;background:linear-gradient(#121514,#090b0a);padding:10px 11px}
+.timerhead{display:flex;align-items:center;justify-content:space-between}
+.timerlabel{font-size:10px;color:#8f9698;letter-spacing:.08em}
+.timerstate{font-size:9px;color:#b7ff5a;border:1px solid #415a31;border-radius:99px;padding:2px 7px}
+.timermain{font-family:Menlo,Consolas,monospace;color:#b7ff5a;font-size:35px;text-align:center;margin:5px 0 4px;text-shadow:0 0 9px rgba(183,255,90,.22)}
+.timersub{text-align:center;font-size:10px;color:#8e9497;min-height:14px}
+.timeractions{display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;margin-top:8px}
+.timeractions button{border:1px solid #3b4042;border-radius:6px;background:#16191a;color:#c7cbcd;padding:7px 6px;font-size:10px}
+.timeractions .timerstart{color:#b7ff5a;border-color:#4c6737}
+.timeractions .timerstop{color:#ff777a;border-color:#63383a}
 
 .dial-label{text-align:center;color:#ddd;font-size:16px;margin-top:3px}
 .dialarea{display:grid;grid-template-columns:1fr 118px 1fr;align-items:center;gap:4px;margin:6px 28px 2px}
@@ -116,6 +116,34 @@ body{min-height:100vh;padding:8px 8px calc(16px + env(safe-area-inset-bottom));o
 .toolbar{display:flex;gap:7px;margin-top:9px}.toolbar button{flex:1;border:1px solid #3a3e40;border-radius:6px;background:#151719;color:#bec2c4;padding:8px;font-size:11px}
 .footer{margin-top:10px;text-align:center;color:#757b7e;font-size:9px;line-height:1.4}
 .flash{animation:flash .22s ease-out}@keyframes flash{0%{filter:brightness(1.7)}100%{filter:none}}
+
+/* v5 Cookbook */
+.viewtabs{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin:0 4px 9px}
+.viewtabs button{border:1px solid #34383a;border-radius:8px;background:#0d0f10;color:#8e9497;padding:9px 10px;font-size:12px;font-weight:700}
+.viewtabs button.active{color:var(--green);border-color:#557a34;box-shadow:inset 0 0 14px rgba(142,219,56,.08)}
+.cookbook{display:none}.cookbook.show{display:block}.panelview.hide{display:none}
+.bookhero{border:1px solid #34383a;border-radius:10px;background:linear-gradient(145deg,#151817,#080a09);padding:13px;margin:0 4px 10px}
+.bookhero h2{font-size:18px;margin:0 0 4px;color:#f0f0ee}.bookhero p{font-size:11px;color:#969c9f;line-height:1.45;margin:0}
+.bookstats{display:flex;gap:6px;margin-top:9px;flex-wrap:wrap}.bookstats span{font-size:9px;border:1px solid #384136;color:#b7ff5a;border-radius:99px;padding:4px 7px}
+.booksearch{width:100%;height:44px;border:1px solid #3a3e40;border-radius:9px;background:#0d0f10;color:#fff;padding:0 13px;font-size:14px;outline:none}
+.booksearch:focus{border-color:#6a973e;box-shadow:0 0 0 2px rgba(142,219,56,.08)}
+.chips{display:flex;overflow:auto;gap:6px;padding:9px 1px 8px;scrollbar-width:none}.chips::-webkit-scrollbar{display:none}
+.chip{white-space:nowrap;border:1px solid #323638;border-radius:99px;background:#0e1011;color:#a9adaf;padding:7px 10px;font-size:10px}
+.chip.active{color:#b7ff5a;border-color:#577b37;background:#11170e}
+.recipegrid{display:grid;gap:7px}
+.recipe{border:1px solid #2d3133;border-radius:9px;background:#0c0e0f;padding:10px;text-align:left;color:#ddd;width:100%}
+.recipe .rhead{display:flex;justify-content:space-between;gap:8px;align-items:start}.recipe .rname{font-size:13px;font-weight:700}.recipe .rcode{font-family:Menlo,monospace;color:#b7ff5a;font-size:10px;border:1px solid #3f5431;border-radius:5px;padding:2px 5px}
+.recipe .rmeta{font-size:10px;color:#888f92;margin-top:4px}.recipe .rnote{font-size:10px;color:#abb0b2;line-height:1.35;margin-top:6px}
+.recipe .rgo{margin-top:8px;border:1px solid #4a6536;border-radius:6px;color:#b7ff5a;background:#11160f;padding:6px 8px;font-size:10px;display:inline-block}
+.verify{font-size:9px;color:#757b7e;line-height:1.45;margin:10px 3px;text-align:center}
+.empty{padding:26px 10px;text-align:center;color:#777;font-size:12px}
+
+
+.recipe .navbox{margin-top:8px;border-left:2px solid #6d9c3e;padding-left:8px}
+.recipe .navtitle{font-size:9px;color:#b7ff5a;margin-bottom:4px;letter-spacing:.06em}
+.recipe .navstep{font-size:10px;color:#d2d5d6;line-height:1.5}
+.recipe .navstep b{display:inline-block;width:18px;color:#7c8588}
+
 </style>
 
 <link rel="manifest" href="manifest.json">
@@ -133,6 +161,11 @@ body{min-height:100vh;padding:8px 8px calc(16px + env(safe-area-inset-bottom));o
   </div>
 
   <div class="fascia">
+    <div class="viewtabs">
+      <button id="tabPanel" class="active" onclick="setView('panel')">CONTROL PANEL</button>
+      <button id="tabBook" onclick="setView('book')">AUTO COOKBOOK</button>
+    </div>
+    <div id="panelView" class="panelview">
     <div class="modebar">
       <button class="modebtn enabled" id="modeMICRO"><span class="sym">≋</span>Micro</button>
       <button class="modebtn enabled" id="modeGRILL"><span class="sym">⌁</span>Grill</button>
@@ -163,13 +196,17 @@ body{min-height:100vh;padding:8px 8px calc(16px + env(safe-area-inset-bottom));o
       <button data-auto="AID" onclick="autoSelect('AID',this)">Cooking Aid/<br>Steam Clean</button>
     </div>
 
-    <div class="minilcd-wrap">
-      <div class="minilcd">
-        <div class="mini-inner">
-          <div class="mini-top" id="miniTop">MANUAL</div>
-          <div class="mini-main" id="miniMain">0:00</div>
-          <div class="mini-sub" id="miniSub">READY</div>
-        </div>
+    <div class="timerbox">
+      <div class="timerhead">
+        <div class="timerlabel">COOK TIMER</div>
+        <div class="timerstate" id="timerState">READY</div>
+      </div>
+      <div class="timermain" id="timerMain">0:00</div>
+      <div class="timersub" id="timerSub">Loads the selected manual cook time automatically.</div>
+      <div class="timeractions">
+        <button class="timerstart" onclick="timerStart()">▶ START</button>
+        <button class="timerstop" onclick="timerPause()">Ⅱ PAUSE</button>
+        <button onclick="timerReset()">↺ RESET</button>
       </div>
     </div>
 
@@ -197,7 +234,24 @@ body{min-height:100vh;padding:8px 8px calc(16px + env(safe-area-inset-bottom));o
       </div>
     </div>
 
-    <div class="footer">Visual navigation aid only. This app does not connect electrically to the microwave. If the real oven and twin disagree, press STOP/CLEAR on both and resynchronise.</div>
+    
+    </div><!-- /panelView -->
+
+    <div id="cookbookView" class="cookbook">
+      <div class="bookhero">
+        <h2>Auto Cookbook</h2>
+        <p>MJ3286BRUS recipe companion. Pick a dish and follow the exact physical button-and-dial sequence. Menu numbers are secondary; the app tells you what to press and how many dial clicks to make.</p>
+        <div class="bookstats">
+          <span>365 AUTO COOK MENUS</span><span>255 INDIAN MENUS</span><span>MJ3286BRUS</span>
+        </div>
+      </div>
+      <input id="bookSearch" class="booksearch" placeholder="Search naan, dosa, steam, diet fry…" oninput="renderRecipes()">
+      <div id="chips" class="chips"></div>
+      <div id="recipeGrid" class="recipegrid"></div>
+      <div class="verify">v5 only labels a recipe “verified” when the MJ3286BRUS recipe material supports it. I am deliberately not importing MC3286BRUM recipe codes into this model.</div>
+    </div>
+
+<div class="footer">Visual navigation aid only. This app does not connect electrically to the microwave. If the real oven and twin disagree, press STOP/CLEAR on both and resynchronise.</div>
   </div>
 </div>
 
@@ -217,7 +271,7 @@ const AUTO={
 };
 let st, hist=[];
 function resetState(){return {stage:'MODE',modeIndex:-1,mode:null,powerIndex:0,tempIndex:9,time:0,auto:null,autoIndex:1,weight:100,running:false,paused:false,angle:0};}
-st=resetState();
+st=resetState();let timer={mode:'countdown',total:0,remaining:0,elapsed:0,running:false,lastTick:null};let timerInterval=null;
 const $=id=>document.getElementById(id);
 function snapshot(){hist.push(JSON.stringify(st));if(hist.length>50)hist.shift();}
 function fmt(sec){return Math.floor(sec/60)+':'+String(sec%60).padStart(2,'0')}
@@ -233,11 +287,7 @@ function setMain(top,big,unit,mode,power,hint){
   $('hint').textContent=hint||'';
   setMini(top,big,mode,power);
 }
-function setMini(top,big,mode,power){
-  $('miniTop').textContent=top||'';
-  $('miniMain').textContent=big||'';
-  $('miniSub').textContent=[mode,power].filter(Boolean).join(' · ');
-}
+
 function updateHighlights(){
   MODES.forEach(m=>{
     const el=$('mode'+m);
@@ -252,6 +302,49 @@ function updateHighlights(){
   $('startBtn').classList.toggle('active',st.running);
 }
 function setAngle(a){st.angle=((a%360)+360)%360;$('knob').style.setProperty('--rot',st.angle+'deg')}
+
+function timerFmt(sec){sec=Math.max(0,Math.round(sec));return Math.floor(sec/60)+':'+String(sec%60).padStart(2,'0')}
+function timerPaint(){
+  const val=timer.mode==='elapsed'?timer.elapsed:timer.remaining;
+  $('timerMain').textContent=timerFmt(val);
+  $('timerState').textContent=timer.running?(timer.mode==='elapsed'?'ELAPSED':'RUNNING'):(timer.mode==='elapsed'?'AUTO':'READY');
+  $('timerSub').textContent=timer.mode==='elapsed'
+    ?'Auto Cook duration is not exposed — tracking elapsed time.'
+    :(timer.total?'Loaded from selected manual cooking time.':'Select a manual cook time first.');
+}
+function timerLoadFromCookTime(){
+  if(st.stage==='TIME' && st.time>0 && !st.running){
+    timer.mode='countdown';timer.total=st.time;timer.remaining=st.time;timer.elapsed=0;timer.running=false;timer.lastTick=null;timerPaint();
+  }
+}
+function timerStart(){
+  if(timer.mode==='countdown' && timer.remaining<=0 && st.time>0){timer.total=st.time;timer.remaining=st.time}
+  timer.running=true;timer.lastTick=Date.now();timerPaint();
+}
+function timerPause(){timer.running=false;timer.lastTick=null;timerPaint()}
+function timerReset(){
+  timer.running=false;timer.lastTick=null;
+  if(timer.mode==='elapsed'){timer.elapsed=0}else{timer.remaining=timer.total||st.time||0}
+  timerPaint();
+}
+function timerAutoBegin(){
+  timer.running=false;timer.lastTick=null;
+  if(st.auto){timer.mode='elapsed';timer.elapsed=0;timer.total=0;timer.remaining=0}
+  else{timer.mode='countdown';timer.total=st.time||0;timer.remaining=st.time||0;timer.elapsed=0}
+  timerStart();
+}
+function timerTick(){
+  if(!timer.running)return;
+  const now=Date.now(), delta=Math.max(0,(now-(timer.lastTick||now))/1000);timer.lastTick=now;
+  if(timer.mode==='elapsed') timer.elapsed+=delta;
+  else{
+    timer.remaining=Math.max(0,timer.remaining-delta);
+    if(timer.remaining<=0){timer.running=false;$('timerState').textContent='DONE';}
+  }
+  timerPaint();
+}
+timerInterval=setInterval(timerTick,250);
+
 function render(){
   updateHighlights();
   if(st.running){
@@ -301,7 +394,7 @@ function dialStep(dir){
   } else if(st.stage==='TEMP'){
     st.tempIndex=Math.max(0,Math.min(TEMP.length-1,st.tempIndex+dir));
   } else if(st.stage==='TIME'){
-    st.time=Math.max(0,st.time+dir*timeStep(st.time));
+    st.time=Math.max(0,st.time+dir*timeStep(st.time));timerLoadFromCookTime();
   } else if(st.stage==='AUTO_SELECT'){
     st.autoIndex=Math.max(1,st.autoIndex+dir);
   } else if(st.stage==='WEIGHT'){
@@ -337,16 +430,16 @@ function startKey(){
     st.running=true;render();return;
   }
   if(st.stage==='AUTO_SELECT'){st.stage='WEIGHT';render();return}
-  if(st.stage==='WEIGHT'){st.running=true;st.time=0;render();return}
+  if(st.stage==='WEIGHT'){st.running=true;st.time=0;timerAutoBegin();render();return}
   if(st.paused){st.running=true;st.paused=false;render()}
 }
 function stopClear(){
   snapshot();pulse($('stopBtn'));
-  if(st.running){st.running=false;st.paused=true;setGuide('Paused','Press START to resume, or STOP/CLEAR again to reset.','Mirror the same action on the real microwave.');return}
+  if(st.running){st.running=false;st.paused=true;timerPause();setGuide('Paused','Press START to resume, or STOP/CLEAR again to reset.','Mirror the same action on the real microwave.');return}
   hardReset(false);
 }
 function hardReset(save=true){
-  if(save)snapshot();st=resetState();setAngle(0);render();
+  if(save)snapshot();st=resetState();let timer={mode:'countdown',total:0,remaining:0,elapsed:0,running:false,lastTick:null};let timerInterval=null;setAngle(0);render();
 }
 function undo(){if(!hist.length)return;st=JSON.parse(hist.pop());setAngle(st.angle||0);render()}
 
@@ -393,7 +486,131 @@ document.addEventListener('touchmove',e=>{
   if(dragging || e.target.closest('.dialarea')) e.preventDefault();
 },{passive:false});
 
-render();
+render();timerPaint();
+</script>
+
+
+<script>
+const BOOK_CATEGORIES = [
+  "All","Charcoal / Indian Cuisine","Diet Fry / Low Calorie","Kids’ Delight / Steam Chef",
+  "Indian Roti Basket","Tea / Dairy Delight","Dosa / Ghee","Cooking Aid / Steam Clean"
+];
+
+/*
+  Verified starter records from MJ3286BRUS recipe material.
+  Code is intentionally null until an exact MJ3286BRUS code is verified.
+*/
+const RECIPES = [
+  {
+    name:"Stuffed Naan", category:"Indian Roti Basket", categoryNo:7, verified:true,
+    weight:"2 pieces", utensil:"Multicook Tawa + Low Rack",
+    nav:["Press STOP/CLEAR","Press Indian Roti Basket","Turn dial RIGHT 6 clicks","Display reaches Category 7","Press START"],
+    note:"After preheat/beep, place 2 rolled stuffed naans on the tawa and press START again."
+  },
+  {
+    name:"Khasta Parantha", category:"Indian Roti Basket", categoryNo:8, verified:true,
+    weight:"2 pieces", utensil:"Multicook Tawa + Low Rack",
+    nav:["Press STOP/CLEAR","Press Indian Roti Basket","Turn dial RIGHT 7 clicks","Display reaches Category 8","Press START"],
+    note:"When it beeps, place 2 paranthas on the tawa and press START; at the next beep smear with oil, turn over and press START."
+  },
+  {
+    name:"Naan", category:"Indian Roti Basket", categoryNo:null, verified:true,
+    weight:"2 pieces", utensil:"Multicook Tawa + Low Rack",
+    nav:["Press STOP/CLEAR","Press Indian Roti Basket","Select the Naan entry shown in the MJ recipe booklet","Press START"],
+    note:"Exact MJ3286BRUS dial count is being verified before I display it."
+  },
+  {
+    name:"Dosa", category:"Dosa / Ghee", categoryNo:null, verified:true,
+    weight:"Auto menu", utensil:"Recipe dependent",
+    nav:["Press STOP/CLEAR","Press Dosa / Ghee","Turn dial to the required Dosa recipe","Press START"],
+    note:"Individual Dosa recipe numbers are being verified."
+  },
+  {
+    name:"Ghee", category:"Dosa / Ghee", categoryNo:null, verified:true,
+    weight:"Auto menu", utensil:"Recipe dependent",
+    nav:["Press STOP/CLEAR","Press Dosa / Ghee","Turn dial to the Ghee program","Press START"],
+    note:"Exact dial count is being verified."
+  },
+  {
+    name:"Steam Chef", category:"Kids’ Delight / Steam Chef", categoryNo:null, verified:true,
+    weight:"Food dependent", utensil:"Steam Chef accessory",
+    nav:["Press STOP/CLEAR","Press Kids’ Delight / Steam Chef","Turn dial to the required Steam Chef recipe","Press START"],
+    note:"Recipe-specific number and weight prompts vary."
+  },
+  {
+    name:"Diet Fry", category:"Diet Fry / Low Calorie", categoryNo:null, verified:true,
+    weight:"Food dependent", utensil:"Recipe dependent",
+    nav:["Press STOP/CLEAR","Press Diet Fry / Low Calorie","Turn dial to the desired recipe","Press START"],
+    note:"Recipe-specific dial counts are being verified."
+  },
+  {
+    name:"Indian Cuisine", category:"Charcoal / Indian Cuisine", categoryNo:null, verified:true,
+    weight:"Recipe dependent", utensil:"Recipe dependent",
+    nav:["Press STOP/CLEAR","Press Charcoal / Indian Cuisine","Turn dial to the desired Indian Cuisine recipe","Press START"],
+    note:"Individual MJ3286BRUS recipe positions are being added only after verification."
+  },
+  {
+    name:"Steam Clean", category:"Cooking Aid / Steam Clean", categoryNo:null, verified:true,
+    weight:"Utility program", utensil:"Refer recipe manual",
+    nav:["Press STOP/CLEAR","Press Cooking Aid / Steam Clean","Turn dial to Steam Clean","Press START"],
+    note:"Exact dial count is being verified."
+  }
+];
+
+let bookCategory="All";
+function setView(v){
+  const panel=document.getElementById('panelView');
+  const book=document.getElementById('cookbookView');
+  const tp=document.getElementById('tabPanel'), tb=document.getElementById('tabBook');
+  panel.classList.toggle('hide',v!=='panel');
+  book.classList.toggle('show',v==='book');
+  tp.classList.toggle('active',v==='panel'); tb.classList.toggle('active',v==='book');
+  if(v==='book') renderRecipes();
+  window.scrollTo({top:0,behavior:'instant'});
+}
+function renderChips(){
+  const c=document.getElementById('chips');
+  if(!c)return;
+  c.innerHTML=BOOK_CATEGORIES.map(x=>`<button class="chip ${x===bookCategory?'active':''}" onclick="bookCategory=${JSON.stringify(x)};renderRecipes()">${x}</button>`).join('');
+}
+function renderRecipes(){
+  renderChips();
+  const q=(document.getElementById('bookSearch')?.value||'').trim().toLowerCase();
+  const arr=RECIPES.filter(r=>{
+    const cat=bookCategory==='All'||r.category===bookCategory;
+    const txt=[r.name,r.category,r.code||'',r.note||'',r.utensil||''].join(' ').toLowerCase();
+    return cat && (!q||txt.includes(q));
+  });
+  const g=document.getElementById('recipeGrid');
+  if(!g)return;
+  if(!arr.length){g.innerHTML='<div class="empty">No verified cookbook entries match this search yet.</div>';return;}
+  g.innerHTML=arr.map((r,i)=>`
+    <button class="recipe" onclick="useRecipe('${r.category.replace(/'/g,"\\'")}')">
+      <div class="rhead"><div class="rname">${r.name}</div><div class="rcode">${r.categoryNo?'CATEGORY '+r.categoryNo:'GUIDED'}</div></div>
+      <div class="rmeta">${r.category} · ${r.weight} · ${r.utensil}</div>
+      <div class="navbox"><div class="navtitle">HOW TO REACH THIS SETTING</div>${r.nav.map((s,n)=>`<div class="navstep"><b>${n+1}.</b> ${s}</div>`).join('')}</div>
+      <div class="rnote">${r.note}</div>
+      <span class="rgo">HIGHLIGHT THE PHYSICAL BUTTON →</span>
+    </button>`).join('');
+}
+function useRecipe(cat){
+  setView('panel');
+  const map={
+    "Charcoal / Indian Cuisine":"CHARCOAL",
+    "Diet Fry / Low Calorie":"DIET",
+    "Kids’ Delight / Steam Chef":"KIDS",
+    "Indian Roti Basket":"ROTI",
+    "Tea / Dairy Delight":"DAIRY",
+    "Dosa / Ghee":"DOSA",
+    "Cooking Aid / Steam Clean":"AID"
+  };
+  const k=map[cat];
+  if(k){
+    const btn=document.querySelector(`[data-auto="${k}"]`);
+    if(btn){btn.scrollIntoView({behavior:'smooth',block:'center'});btn.classList.add('flash');setTimeout(()=>btn.classList.remove('flash'),600);}
+  }
+}
+document.addEventListener('DOMContentLoaded',()=>{renderChips();renderRecipes();});
 </script>
 
 <script>
