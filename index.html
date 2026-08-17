@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="theme-color" content="#050607">
-<title>LG MJ3286BRUS Digital Twin v9</title>
+<title>LG MJ3286BRUS Digital Twin v10</title>
 <style>
 :root{
   --bg:#030405; --panel:#0a0b0c; --panel2:#111315; --edge:#3a3d40;
@@ -251,22 +251,15 @@ body{min-height:100vh;padding:8px 8px calc(16px + env(safe-area-inset-bottom));o
     <div id="cookbookView" class="cookbook">
       <div class="bookhero">
         <h2>Auto Cookbook</h2>
-        <p>MJ3286BRUS recipe companion. Pick a dish and follow the exact physical button-and-dial sequence. Menu numbers are secondary; the app tells you what to press and how many dial clicks to make.</p>
-        <div class="bookstats">
-          <span>365 POSITIONS LOADED</span><span>VERIFICATION BADGES</span><span>MJ3286BRUS</span>
-        </div>
+        <p>MJ3286BRUS recipe companion. Pick a dish and follow the exact physical button-and-dial sequence from the MJ3286BRUS recipe manual.</p>
+        <div class="bookstats"><span>365 EXACT RECIPES</span><span>MFL67281855</span><span>MJ3286BRUS</span></div>
       </div>
       <input id="bookSearch" class="booksearch" placeholder="Search naan, dosa, steam, diet fry…" oninput="renderRecipes()">
-      <div class="bookstatus">
-        <button id="statusAll" class="active" onclick="setVerifyFilter('all')">ALL 365</button>
-        <button id="statusVerified" onclick="setVerifyFilter('verified')">VERIFIED</button>
-        <button id="statusUnverified" onclick="setVerifyFilter('unverified')">UNVERIFIED</button>
-      </div>
-      <div class="countnote" id="countNote"></div>
+      
 
       <div id="chips" class="chips"></div>
       <div id="recipeGrid" class="recipegrid"></div>
-      <div class="verify">v5 only labels a recipe “verified” when the MJ3286BRUS recipe material supports it. I am deliberately not importing MC3286BRUM recipe codes into this model.</div>
+      <div class="verify">All recipe names and category numbers are sourced from the exact MJ3286BRUS Recipe Manual MFL67281855.</div>
     </div>
 
 <div class="footer">Visual navigation aid only. This app does not connect electrically to the microwave. If the real oven and twin disagree, press STOP/CLEAR on both and resynchronise.</div>
@@ -278,15 +271,9 @@ const MODES=['MICRO','GRILL','CONV','CG','CC'];
 const MODE_LABEL={MICRO:'MICRO',GRILL:'GRILL',CONV:'CONV.',CG:'COMBI.',CC:'COMBI.'};
 const POWER=[900,720,540,360,180];
 const TEMP=[40,100,110,120,130,140,150,160,170,180,190,200,210,220,230];
-const AUTO={
-  CHARCOAL:{prefix:'IC',name:'Charcoal / Indian Cuisine'},
-  DIET:{prefix:'DF',name:'Diet Fry / Low Calorie'},
-  KIDS:{prefix:'SC',name:"Kids’ Delight / Steam Chef"},
-  ROTI:{prefix:'RB',name:'Indian Roti Basket'},
-  DAIRY:{prefix:'DA',name:'Tea / Dairy Delight'},
-  DOSA:{prefix:'DG',name:'Dosa / Ghee'},
-  AID:{prefix:'CA',name:'Cooking Aid / Steam Clean'}
-};
+const AUTO={"CHARCOAL": {"name": "Charcoal / Indian Cuisine"}, "DIET": {"name": "Diet Fry / Low Calorie"}, "KIDS": {"name": "Kids’ Delight / Steam Chef"}, "ROTI": {"name": "Indian Roti Basket"}, "DAIRY": {"name": "Tea / Dairy Delight"}, "DOSA": {"name": "Dosa / Ghee"}, "AID": {"name": "Cooking Aid / Steam Clean"}};
+const EXACT_RECIPES={"CHARCOAL": ["MURG TANDOORI", "BHARWAN TAMATAR", "TANDOORI ALOO", "TANDOORI GOBHI", "BHARWAN BHINDI", "BHARWAN BAIGAN", "TANDOORI JHINGA", "CHANA KABABS", "PANEER TIKKA", "MATAR KABABS", "TANDOORI MUSHROOMS", "ARBI TANDOORI", "MALAI TIKKA", "CORN KABABS", "KASTOORI KABAB", "TIKKA ACHAARI", "MAHI TIKKA", "TANDOORI SUBZI", "MIX VEG PLATTER", "FISH TANDOORI", "FALDARI KABABS", "SPICY CHICKEN KABABS", "CHILKA KABABS", "JIMIKAND KE KABABS", "KAJU KABABS", "MUTTON & TOMATO KABABS", "DAHI KABABS", "CHICKEN LOLLIPOPS", "TANDOORI FRUIT CHAAT", "CHICKEN SAUTE", "MIX VEG", "KADHAI PANEER", "DAL TADKA", "SAMBHAR", "DUM ALOO", "KADHI", "BAATI", "DALMA", "PITHLA", "PANCHMEL KI SABZI", "GUJARATI TUVAR DAL", "BUTTER CHICKEN", "BEANS PORIAL", "GOAN POTATO CURRY", "VEG. HANDVA", "KASHMIRI KAJU PANEER", "KADHAI CHICKEN", "BAIGAN KA BHARTA", "KOFTA CURRY", "ALOO GOBHI", "MATAR PANEER", "GATTE KI SABZI", "EGG CURRY", "JHINGA MATAR CURRY", "DUM TANGRI", "MAKKI KORMA", "LITTI", "CHOKHA", "METHI ALOO", "KADDU KI SABZI", "PALAK KEEMA", "PANEER PISTA HARYALI", "BANDHGOBHI MATAR", "MUSHROOM CHILLI", "KALONJI ALOO", "DAHI ALOO", "ALOO SHIMLAMIRCH", "PANEER BHURJI", "SCRAMBLED EGGS", "UKADICHE MODAK", "SUJI HALWA", "BESAN LADOO", "KHEER", "PAYASAM", "MYSORE PAK", "NARIYAL BURFI", "SANDESH", "SEVIYAN ZARDA", "BURFI", "KALAKAND", "SHAHI RABDI", "SHAHI TUKDA", "KADDU KHEER", "RAVA LADOO", "KAJU BURFI", "BADAM HALWA", "SUJI KHEER", "FRUITS DESSERT", "RAGGI KHEER", "FRUIT RAVA KESARI", "CHICKEN BIRYANI", "GOSHT DUM BIRYANI", "MALABAR BIRYANI", "PINEAPPLE FRIED RICE", "VEG. PULAO", "VEG. TAHIRI", "PEPPER RICE", "ZAFRANI PULAO", "BENGALI BIRYANI", "KHUMB PULAO", "TIRANGA PULAO", "EGG BIRYANI", "ACHARI CHANA PULAO", "METHI RICE", "COCONUT RICE", "CURD RICE", "KEEMA PULAO", "TOMATO PULAO", "PANEER FRIED RICE", "CHILLI GARLIC RICE", "APPLE TOMATO CHUTNEY", "LEMON PICKLE", "MIX VEG PICKLE", "PIZZA SAUCE", "TOMATO SAUCE", "MASALA CHUTNEY", "LEHSUN KI CHUTNEY", "MANCHURIAN SAUCE", "AAM KI CHUTNEY", "COCONUT CHUTNEY", "TIL KI CHUTNEY", "CHANA CHAAT", "ALOO KAND CHAAT", "AMLA CHUTNEY", "BAINGAN CHUTNEY"], "DIET": ["CHICKEN NUGGETS", "ALOO CHIPS", "BREAD PAKORA", "PANEER PAKORA", "GUIJIA", "SAMOSA", "MASALA VADA", "CHICKEN 65", "STUFFED ALOO PATTIES", "MUSHROOM ROLLS", "SABUDANA VADA", "FISH AMRITSARI", "BATATA VADA", "PYAAZ PAKORA", "MIRCHI VADA", "ALOO BHAJI", "SOYABEAN TIKKI", "OATS CUTLET", "METHI MASALA VADA", "POHA PATTIES", "FRENCH TOAST", "BUFF VADA", "PALAK TIKKI", "CORN ALOO TIKKI", "MIX VEG BHAJIA", "BEET ROOT SALAD", "COUS COUS SALAD", "PASTA SALAD", "RICE SALAD", "CHICKEN IN TOMATO TOWERS", "TIRANGA SALAD", "HARI SEEKH SALAD", "BABYCORN AND BEAN SALAD", "CARROT AND PEAS SALAD", "PAPAYA LACHCHA SALAD", "WHOLE WHEAT & MINT SALAD", "BREAD SALAD", "SPRING BASKET SALAD", "CRUNCHY CHICKEN SALAD", "BROCCOLI SALAD", "LEMON CHICKEN", "KALA CHANA", "KARELA SUBZI", "MACHI KALI MIRCH", "NUTRINUGGETS", "SOYABEAN CURRY", "CURD BRINJAL", "FISH BHARTA", "SOYA IDLI", "BATHUA RAITA", "SPINACH DAL", "HEALTHY KHICHDI", "LEAF ROLLS", "MOONG DAL", "OATS IDLI", "DALIYA KHICHDI", "FISH CUTLET", "FISH MASALA", "FISH PULUSU", "COCONUT PRAWNS", "CRAB CURRY", "MASE KALAVAN", "DALIYA KHICHDI", "SABUDANA KHICHDI", "HOME MADE CEREAL", "KHICHDI", "CHICKEN SHORBA", "TAMATAR SHORBA", "SWEET CORN SOUP", "MUSHROOM SOUP", "RASAM", "HOT & SOUR SOUP", "TOMATO SOUP", "MULLIGATWNY SOUP", "TOM YUM KUNG", "SICHUAN SOUP", "PALAK MAKAI SHORBA", "RAJMA SOUP", "SHAHI SHORBA", "BOMBAY CURRY SOUP", "BADAM SOUP", "LIMBU DHANIA SHORBA", "MUTTON SHORBA", "DAL SHORBA", "CHICKEN SOUP", "WONTON SOUP", "PASTA", "VEG AU GRATIN", "BAKED MUSHROOM", "POTATO DUMPLING", "LASANEYA", "MACARONI", "CHILLI VEG", "THAI CHICKEN", "SWEET & SOUR VEG", "MEDITERRANEAN CROSTINI", "RISOTTO RICE", "SPAGHETTI WITH TOMATO SAUCE", "COTTAGE CHEESE TORTELLINI", "MEXICAN CORN RICE", "BROCCOLI IN BUTTER SAUCE", "SHRIMPS IN GARLIC BUTTER", "CHILLI CHICKEN", "HAKKA NOODLES", "VEG. IN HOT GARLIC SAUCE", "SCHEZWAN CHICKEN", "VEG MANCHURIAN", "CHILLI SOY NUGGETS", "STEAMED EGG WITH TOFU", "ALMOND & VEGETABLES STIR FRY"], "KIDS": ["CORN CHAAT", "VERMICELLI KHICHDI", "OMELETTE", "PIZZA", "GARLIC BREAD", "BREAD PUDDING", "CHEESY NACHOS", "CHOCOLATE BALLS", "STRAWBERRY CUSTARD", "VEG BURGER", "CHOCO BARS", "MUSHROOM & PEPPER PIZZA", "CHEESE BREAD DELIGHT", "NOODLE ROSTI", "APPLE PIE", "APPLE CUSTARD", "DHOKLA", "POHA", "UPMA", "BESAN CHEELA", "VEG SANDWICH", "PANEER SANDWICH", "MASALA CHEESE TOAST", "KHANDVI", "COTTAGE HONEY TOAST", "TOKRI CHAAT", "SPICY BABY CORN", "BREAD UPMA", "UGGANI", "UKADICHE MODAK", "CHOCOLATE CAKE", "LAMINGTON CAKE", "DOUGHNUTS", "NAN KHATAI", "WHOLE WHEAT COOKIES", "CHENA PODA", "VANILLA CAKE", "BUNS", "APPLE CUP CAKES", "EGGLESS CHOCOLATE CAKE", "SWISS ROLL", "PATTIES", "JEERA BISCUITS", "PINWHEEL COOKIES", "BROWNIE", "MUFFINS", "WALNUT CAKE", "CARROT CAKE", "MASALA BISCUITS", "CHEESE STRAW", "MOMOS", "SPROUTS", "STEAMED CHICKEN", "SARSON KA SAAG", "MATAR MUSHROOM", "BOILED EGGS", "GAJAR KA HALWA", "AVIAL", "SHORSHE ILISH", "ALUVADI", "RASIA MUTHIYA", "STEAMED PEAS", "BHAFOURI", "KEEMA BALLS", "METHI MUTHIYA", "FARA"], "ROTI": ["NAAN", "LACHHA PARANTHA", "APPAM", "THEPLA", "MASALA ROTI", "MISSI ROTI", "STUFFED NAAN", "KHASTA PARANTHA", "PUDINA PARANTHA", "RAJMA PARANTHA", "PANEER PARANTHA", "KULCHE", "ALOO PARANTHA", "PALAK PARANTHA", "GOBHI PARANTHA", "AJWAIN PARANTHA", "PAYAAZ PARANTHA", "CHATPATA PARANTHA", "ALOO GOBHI PARANTHA", "METHI PARANTHA", "CABBAGE PARANTHA", "CORN PARANTHA", "CARROT PARANTHA", "PEA PARANTHA", "MUSHROOM PARANTHA"], "DAIRY": ["TEA", "COFFEE", "MASALA TEA", "GINGER TEA", "TULSI TEA", "LEMON TEA", "BLACK TEA", "GREEN TEA", "SPICED CIDER TEA", "PEPPERMINT TEA", "PANEER", "MASALA PANEER", "CURD", "FLAVOURED YOGHURT"], "DOSA": ["MASALA DOSA", "BOMBAY MYSORE MASALA DOSA", "ONION RAVA DOSA", "PANEER CHILLI DOSA", "PALAK PANEER DOSA", "CORN DOSA", "MATAR PANEER DOSA", "MUSHROOM CHILLI DOSA", "GHEE"], "AID": ["KEEP WARM", "DEFROST VEG", "DEFROST NON VEG", "DE HUMIDIFICATION", "LIGHT DISINFECT", "BODY MASSAGE OIL", "PIZZA BASE", "YEAST DOUGH", "BOIL POTATOES", "LEMON SQUEEZE", "GARLIC PEEL", "TEAR FREE ONIONS", "CRISPY NUTS", "SMOOTH HONEY", "STALE TO FRESH BREAD", "STEAM CLEAN"]};
+function autoDisplayText(key,no){const a=EXACT_RECIPES[key]||[];const name=a[Math.max(0,Math.min(a.length-1,no-1))]||'';return `${no} ${name}`;}
 let st, hist=[];
 function resetState(){return {stage:'MODE',modeIndex:-1,mode:null,powerIndex:0,tempIndex:9,time:0,auto:null,autoIndex:1,weight:100,running:false,paused:false,angle:0};}
 st=resetState();let timer={mode:'countdown',total:0,remaining:0,elapsed:0,running:false,lastTick:null};let timerInterval=null;
@@ -380,13 +367,13 @@ function render(){
     return;
   }
   if(st.auto && st.stage==='AUTO_SELECT'){
-    setMain('AUTO',AUTO[st.auto].prefix+st.autoIndex,'',AUTO[st.auto].name,'','Turn the dial to the recipe code, then START.');
-    setGuide('Auto Cook','Select the same recipe number on the real oven, then press START on both.','Recipe-specific food mappings depend on the LG recipe booklet.');
+    setMain('AUTO',autoDisplayText(st.auto,st.autoIndex),'',AUTO[st.auto].name,'','Turn the dial to the recipe, then START/Add 30secs.');
+    setGuide('Auto Cook',`Selected ${autoDisplayText(st.auto,st.autoIndex)}.`,'Press START/Add 30secs to confirm category.');
     return;
   }
   if(st.auto && st.stage==='WEIGHT'){
-    setMain('AUTO',(st.weight/1000).toFixed(2),'kg',AUTO[st.auto].name,'','Set the same weight/quantity on the real oven.');
-    setGuide('Weight / quantity','Turn the dial to match the real oven prompt, then START.','If that recipe starts immediately on the real oven, press START here once more.');
+    setMain('AUTO',(st.weight/1000).toFixed(2),'kg',autoDisplayText(st.auto,st.autoIndex),'','Turn the dial to the recipe weight / quantity.');
+    setGuide('Weight / quantity',`Recipe: ${autoDisplayText(st.auto,st.autoIndex)}.`,'Select the required value, then press START/Add 30secs.');
     return;
   }
   if(st.stage==='MODE'){
@@ -423,7 +410,7 @@ function dialStep(dir){
   } else if(st.stage==='TIME'){
     st.time=Math.max(0,st.time+dir*timeStep(st.time));timerLoadFromCookTime();
   } else if(st.stage==='AUTO_SELECT'){
-    st.autoIndex=Math.max(1,st.autoIndex+dir);
+    st.autoIndex=Math.max(1,Math.min(EXACT_RECIPES[st.auto].length,st.autoIndex+dir));
   } else if(st.stage==='WEIGHT'){
     st.weight=Math.max(50,st.weight+dir*50);
   }
@@ -436,33 +423,33 @@ function autoSelect(k,btn){
 function startKey(){
   snapshot();pulse($('startBtn'));
 
-  // Quick Start: from a true idle state, START immediately cooks for 10 seconds at high power.
+  // Quick Start: from a true idle state, START immediately cooks for 30 seconds at high power.
   if(st.stage==='MODE' && !st.mode && !st.auto && !st.running){
     st.mode='MICRO';
     st.modeIndex=0;
     st.powerIndex=0;
-    st.time=10;
+    st.time=30;
     st.running=true;
     timer.mode='countdown';
-    timer.total=10;
-    timer.remaining=10;
+    timer.total=30;
+    timer.remaining=30;
     timer.elapsed=0;
     timerStart();
     render();
-    setGuide('Quick Start','Microwave started at 900 W for 10 seconds.','Press START again on both oven and app to add another 10 seconds.');
+    setGuide('Quick Start','Microwave started at 900 W for 30 seconds.','Press START again on both oven and app to add another 30 seconds.');
     return;
   }
 
-  // While cooking manually, START adds 10 seconds.
+  // While cooking manually, START adds 30 seconds.
   if(st.running){
     if(!st.auto){
-      st.time += 10;
+      st.time += 30;
       if(timer.mode==='countdown'){
-        timer.total += 10;
-        timer.remaining += 10;
+        timer.total += 30;
+        timer.remaining += 30;
       }
       render();
-      setGuide('Quick Start +10s','Added 10 seconds.','Mirror the same START press on the real microwave.');
+      setGuide('Quick Start +30s','Added 30 seconds.','Mirror the same START press on the real microwave.');
     }
     return;
   }
@@ -488,7 +475,7 @@ function startKey(){
   }
 
   if(st.stage==='TIME'){
-    if(st.time<=0)st.time=10;
+    if(st.time<=0)st.time=30;
     st.running=true;timerAutoBegin();render();return;
   }
 
@@ -557,99 +544,25 @@ render();timerPaint();
 
 
 <script>
-const BOOK_CATEGORIES = [
-  "All","Charcoal / Indian Cuisine","Diet Fry / Low Calorie","Kids’ Delight / Steam Chef",
-  "Indian Roti Basket","Tea / Dairy Delight","Dosa / Ghee","Cooking Aid / Steam Clean"
-];
-
-/*
-  Verified starter records from MJ3286BRUS recipe material.
-  Code is intentionally null until an exact MJ3286BRUS code is verified.
-*/
-const VERIFIED_BRUS = {
-  "Indian Roti Basket:7":{
-    name:"Stuffed Naan",
-    weight:"2 pieces",
-    utensil:"Multicook Tawa + Low Rack",
-    note:"Verified against MJ3286BRUS recipe material."
-  },
-  "Indian Roti Basket:8":{
-    name:"Khasta Parantha",
-    weight:"2 pieces",
-    utensil:"Multicook Tawa + Low Rack",
-    note:"Verified against MJ3286BRUS recipe material."
-  }
-};
-
-/*
-  Full 365-position structure sourced from LG's closely-related MJ3286BFUM
-  365-recipe manual. These positions remain visibly UNVERIFIED FOR BRUS
-  until independently checked against MJ3286BRUS recipe material.
-*/
-const FAMILY_SECTIONS = [
-  {category:"Charcoal / Indian Cuisine", count:125},
-  {category:"Diet Fry / Low Calorie", count:110},
-  {category:"Kids’ Delight / Steam Chef", count:65},
-  {category:"Tea / Dairy Delight", count:16},
-  {category:"Indian Roti Basket", count:25},
-  {category:"Dosa / Ghee", count:9},
-  {category:"Cooking Aid / Steam Clean", count:15}
-];
-
-// Names confirmed from the BFUM family recipe manual or indexed excerpts.
-// These are NOT marked verified for BRUS unless also present in VERIFIED_BRUS.
-const FAMILY_NAMES = {
-  "Charcoal / Indian Cuisine:1":"Murg Tandoori",
-  "Charcoal / Indian Cuisine:2":"Bharwan Tamatar",
-  "Charcoal / Indian Cuisine:3":"Tandoori Aloo",
-  "Charcoal / Indian Cuisine:4":"Tandoori Gobhi",
-  "Charcoal / Indian Cuisine:5":"Bharwan Bhindi",
-  "Charcoal / Indian Cuisine:16":"Tikka Achaari",
-  "Charcoal / Indian Cuisine:43":"Beans Porial",
-  "Charcoal / Indian Cuisine:44":"Goan Potato Curry",
-  "Charcoal / Indian Cuisine:65":"Kalonji Aloo",
-  "Charcoal / Indian Cuisine:66":"Dahi Aloo",
-  "Charcoal / Indian Cuisine:124":"Amla Chutney",
-  "Charcoal / Indian Cuisine:125":"Baingan Chutney",
-  "Diet Fry / Low Calorie:49":"Soya Idli",
-  "Indian Roti Basket:7":"Stuffed Naan",
-  "Indian Roti Basket:8":"Khasta Parantha",
-  "Cooking Aid / Steam Clean:14":"Smooth Honey",
-  "Cooking Aid / Steam Clean:15":"Steam Clean"
-};
-
-const RECIPES = [];
-for(const section of FAMILY_SECTIONS){
-  for(let n=1;n<=section.count;n++){
-    const key=section.category+":"+n;
-    const verified=!!VERIFIED_BRUS[key];
-    const base=VERIFIED_BRUS[key]||{};
-    const knownName=base.name||FAMILY_NAMES[key]||null;
-    RECIPES.push({
-      name:knownName || `${section.category} — Recipe ${n}`,
-      category:section.category,
-      categoryNo:n,
-      verified,
-      source:verified?"MJ3286BRUS":"MJ3286BFUM family mapping",
-      weight:base.weight||"Recipe dependent",
-      utensil:base.utensil||"Refer recipe instructions",
-      nav:[
-        "Press STOP/CLEAR",
-        `Press ${section.category}`,
-        n===1 ? "Category 1 is the first selection — no dial turn" : `Turn dial RIGHT ${n-1} ${n-1===1?'click':'clicks'} from Category 1`,
-        `Confirm Category ${n}`,
-        "Press START",
-        "If weight/quantity is requested, turn the dial to the required value",
-        "Press START again"
-      ],
-      note:base.note || (knownName
-        ? "Recipe name/position comes from the related LG MJ3286BFUM 365-recipe manual; not yet independently verified on MJ3286BRUS."
-        : "Position exists in the related LG 365-menu structure; recipe name has not yet been independently recovered/verified for MJ3286BRUS.")
-    });
-  }
+const BOOK_CATEGORIES = ["All","Charcoal / Indian Cuisine","Diet Fry / Low Calorie","Kids’ Delight / Steam Chef","Indian Roti Basket","Tea / Dairy Delight","Dosa / Ghee","Cooking Aid / Steam Clean"];
+const AUTO_KEY_BY_LABEL=Object.fromEntries(Object.entries(AUTO).map(([k,v])=>[v.name,k]));
+const RECIPES=[];
+for(const [key,names] of Object.entries(EXACT_RECIPES)){
+  names.forEach((name,i)=>RECIPES.push({
+    name,category:AUTO[key].name,autoKey:key,categoryNo:i+1,
+    nav:[
+      "Press STOP/CLEAR",
+      `Press ${AUTO[key].name}`,
+      `Display shows “auto”`,
+      i===0?"Category 1 is the first selection — no dial turn":`Turn dial RIGHT ${i} ${i===1?'click':'clicks'}`,
+      `Display should show “${i+1} ${name}”`,
+      "Press START/Add 30secs to confirm category",
+      "Turn dial to select the required weight / quantity",
+      "Press START/Add 30secs"
+    ]
+  }));
 }
-
-let bookCategory="All";let verifyFilter="all";
+let bookCategory="All";
 function setView(v){
   const panel=document.getElementById('panelView');
   const book=document.getElementById('cookbookView');
@@ -659,14 +572,6 @@ function setView(v){
   tp.classList.toggle('active',v==='panel'); tb.classList.toggle('active',v==='book');
   if(v==='book') renderRecipes();
   window.scrollTo({top:0,behavior:'instant'});
-}
-function setVerifyFilter(v){
-  verifyFilter=v;
-  ['All','Verified','Unverified'].forEach(x=>{
-    const el=document.getElementById('status'+x);
-    if(el)el.classList.toggle('active',v===x.toLowerCase());
-  });
-  renderRecipes();
 }
 function renderChips(){
   const c=document.getElementById('chips');
@@ -678,41 +583,38 @@ function renderRecipes(){
   const q=(document.getElementById('bookSearch')?.value||'').trim().toLowerCase();
   const arr=RECIPES.filter(r=>{
     const cat=bookCategory==='All'||r.category===bookCategory;
-    const vf=verifyFilter==='all'||(verifyFilter==='verified'&&r.verified)||(verifyFilter==='unverified'&&!r.verified);
-    const txt=[r.name,r.category,String(r.categoryNo),r.note||'',r.utensil||'',r.source||''].join(' ').toLowerCase();
-    return cat && vf && (!q||txt.includes(q));
+    const txt=[r.name,r.category,String(r.categoryNo)].join(' ').toLowerCase();
+    return cat && (!q||txt.includes(q));
   });
-  const cn=document.getElementById('countNote');
-  if(cn)cn.textContent=`Showing ${arr.length} of 365 positions · ${RECIPES.filter(x=>x.verified).length} verified specifically for MJ3286BRUS`;
   const g=document.getElementById('recipeGrid');
   if(!g)return;
-  if(!arr.length){g.innerHTML='<div class="empty">No verified cookbook entries match this search yet.</div>';return;}
-  g.innerHTML=arr.map((r,i)=>`
-    <button class="recipe" onclick="useRecipe('${r.category.replace(/'/g,"\\'")}')">
-      <div class="rhead"><div><div class="rname">${r.name}</div><span class="vbadge ${r.verified?'verified':'unverified'}">${r.verified?'✓ VERIFIED BRUS':'△ UNVERIFIED FOR BRUS'}</span></div><div class="rcode">CATEGORY ${r.categoryNo}</div></div>
-      <div class="rmeta">${r.category} · ${r.weight} · ${r.utensil}</div><div class="rmeta">Source: ${r.source}</div>
+  if(!arr.length){g.innerHTML='<div class="empty">No recipes match this search.</div>';return;}
+  g.innerHTML=arr.map(r=>`
+    <div class="recipe verified">
+      <div class="rhead">
+        <div><div class="rname">${r.name}</div><span class="vbadge verified">✓ MJ3286BRUS</span></div>
+        <div class="rcode">CATEGORY ${r.categoryNo}</div>
+      </div>
+      <div class="rmeta">${r.category}</div>
       <div class="navbox"><div class="navtitle">HOW TO REACH THIS SETTING</div>${r.nav.map((s,n)=>`<div class="navstep"><b>${n+1}.</b> ${s}</div>`).join('')}</div>
-      <div class="rnote">${r.note}</div>
-      <button type="button" class="rgo" onclick="useRecipe(\'${r.category.replace(/\'/g,"\\\\\'")}\')">HIGHLIGHT THE PHYSICAL BUTTON →</button>
+      <button type="button" class="rgo" onclick="loadRecipe('${r.autoKey}',${r.categoryNo})">LOAD THIS RECIPE INTO TWIN →</button>
     </div>`).join('');
 }
-function useRecipe(cat){
+function loadRecipe(key,no){
   setView('panel');
-  const map={
-    "Charcoal / Indian Cuisine":"CHARCOAL",
-    "Diet Fry / Low Calorie":"DIET",
-    "Kids’ Delight / Steam Chef":"KIDS",
-    "Indian Roti Basket":"ROTI",
-    "Tea / Dairy Delight":"DAIRY",
-    "Dosa / Ghee":"DOSA",
-    "Cooking Aid / Steam Clean":"AID"
-  };
-  const k=map[cat];
-  if(k){
-    const btn=document.querySelector(`[data-auto="${k}"]`);
-    if(btn){btn.scrollIntoView({behavior:'smooth',block:'center'});btn.classList.add('flash');setTimeout(()=>btn.classList.remove('flash'),600);}
+  const btn=document.querySelector(`[data-auto="${key}"]`);
+  if(btn){
+    autoSelect(key,btn);
+    st.autoIndex=no;
+    render();
+    setTimeout(()=>btn.scrollIntoView({behavior:'smooth',block:'center'}),30);
   }
 }
+function useRecipe(cat){
+  const k=AUTO_KEY_BY_LABEL[cat];
+  if(k)loadRecipe(k,1);
+}
+
 
 document.addEventListener('click',e=>{
   const chip=e.target.closest('.chip[data-cat-index]');
